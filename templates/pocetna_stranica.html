@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sadrzaj %}
+
+    <main>
+      <div class="container-fluid">
+        <div class="row" style="background: url({% static 'images/naslovna.jpg' %}) no-repeat center / cover;">
+          <div class="col">
+              <div id="trazilice">
+                <form class="row gy-2 gx-3 align-items-center" style="justify-content:center;">
+                  <h2>PRETRAŽITE DOSTUPNE OPG-OVE PREMA KRITERIJIMA</h2>
+                  <p>"Domaće uzgojena hrana - spoj ljubavi prema zemlji, prirodi i zdravlju koja nas hrani iznutra i čuva naše korijene."</p> 
+                  <div class="col-auto">
+                    <input type="text" class="form-control" placeholder="Naziv opg-a / proizvoda">
+                  </div>
+                  <div class="col-auto">
+                    <div class="input-group">
+                      <div class="input-group-text"><i class="bi bi-geo-alt"></i></div>
+                      <input type="text" class="form-control" placeholder="Pretraži lokacije">
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <select class="form-select" id="autoSizingSelect">
+                      <option selected>Udaljenost</option>
+                      <option value="1">10km</option>
+                      <option value="2">20km</option>
+                      <option value="3">30km</option>
+                      <option value="4">40km</option>
+                      <option value="5">50km</option>
+                    </select>
+                  </div>
+                  <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">Pretraži</button>
+                  </div>
+                </form>
+              </div>         
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div style = "margin-top:3rem; margin-left:4rem">
+              <h2>Najbolji OPG-ovi</h2>
+              <p>Istražite OPG-ove:</p>
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ms-4">
+            <ul class="list-unstyled d-flex me-5">
+              <li class="ps-3">
+                <div class="najbolji_opgovi"> 
+                  <a href="">
+                    <img src="https://placebear.com/g/500/500" class="img-fluid" alt="">
+                  </a> 
+                </div>
+              </li>
+              <li class="ps-3">
+                <div class="najbolji_opgovi"> 
+                  <a href="">
+                    <img src="https://placebear.com/g/500/500" class="img-fluid" alt="">
+                  </a> 
+                </div>
+              </li>
+              <li class="ps-3">
+                <div class="najbolji_opgovi"> 
+                  <a href="">
+                    <img src="https://placebear.com/g/500/500" class="img-fluid" alt="">
+                  </a> 
+                </div>
+              </li>
+              <li class="ps-3">
+                <div class="najbolji_opgovi"> 
+                  <a href="">
+                    <img src="https://placebear.com/g/500/500" class="img-fluid" alt="">
+                  </a> 
+                </div>
+              </li>
+              <li class="ps-3">
+                <div class="najbolji_opgovi"> 
+                  <a href="">
+                    <img src="https://placebear.com/g/500/500" class="img-fluid" alt="">
+                  </a> 
+                </div>
+              </li>
+              <li class="ps-3">
+                <div class="najbolji_opgovi"> 
+                  <a href="">
+                    <img src="https://placebear.com/g/500/500" class="img-fluid" alt="">
+                  </a> 
+                </div>
+              </li>
+              <li class="ps-3">
+                <div class="najbolji_opgovi"> 
+                  <a href="">
+                    <img src="https://placebear.com/g/500/500" class="img-fluid" alt="">
+                  </a> 
+                </div>
+              </li>
+              <li class="ps-3">
+                <div class="najbolji_opgovi"> 
+                  <a href="">
+                    <img src="https://placebear.com/g/500/500" class="img-fluid" alt="">
+                  </a> 
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center mt-5 mb-1">
+            <h2>Odaberite neke od najpopularnijih opg-ova</h2>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center mt-5 mb-5">
+            <div class="najpopularniji_opgovi">
+              <ul class="row list-unstyled ms-3 pb-5">
+
+                <li class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="card mb-4" style="max-width: 600px;">
+                    <div class="row g-0">
+                      <div class="col-md-4">
+                        <img src="https://placebear.com/g/500/500" class="img-fluid rounded-start" alt="...">
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body text-start">
+                          <h5 class="card-title">Naziv restorana</h5>
+                          <p class="card-text">Adresa restorana</p>
+                          <p class="card-text"><small class="text-body-secondary">30 km udaljenost</small></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+
+
+                <li class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="card mb-4" style="max-width: 600px;">
+                    <div class="row g-0">
+                      <div class="col-md-4">
+                        <img src="https://placebear.com/g/500/500" class="img-fluid rounded-start" alt="...">
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body text-start">
+                          <h5 class="card-title">Naziv restorana</h5>
+                          <p class="card-text">Adresa restorana</p>
+                          <p class="card-text"><small class="text-body-secondary">30 km udaljenost</small></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="card mb-4" style="max-width: 600px;">
+                    <div class="row g-0">
+                      <div class="col-md-4">
+                        <img src="https://placebear.com/g/500/500" class="img-fluid rounded-start" alt="...">
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body text-start">
+                          <h5 class="card-title">Naziv restorana</h5>
+                          <p class="card-text">Adresa restorana</p>
+                          <p class="card-text"><small class="text-body-secondary">30 km udaljenost</small></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                
+                <li class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="card mb-4" style="max-width: 600px;">
+                    <div class="row g-0">
+                      <div class="col-md-4">
+                        <img src="https://placebear.com/g/500/500" class="img-fluid rounded-start" alt="...">
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body text-start">
+                          <h5 class="card-title">Naziv restorana</h5>
+                          <p class="card-text">Adresa restorana</p>
+                          <p class="card-text"><small class="text-body-secondary">30 km udaljenost</small></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+{% endblock %}

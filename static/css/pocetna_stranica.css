@@ -1,0 +1,20 @@
+#trznica_btn{
+    margin-left: 1rem;
+}
+
+#registriraj_opg_btn{
+    margin-left: 1rem;
+}
+
+#trazilice{
+    margin: 8rem;
+    backdrop-filter: blur(30px);
+    text-align: center;
+    border-radius: 2rem;
+    padding: 2rem;
+}
+
+
+.najbolji_opgovi{
+    max-width: 150px; max-height:150px; overflow: hidden;
+}

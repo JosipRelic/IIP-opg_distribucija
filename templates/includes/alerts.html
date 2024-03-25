@@ -1,0 +1,10 @@
+{% if messages %}
+{% for message in messages %}
+   <div class="alert alert-success d-flex align-items-center" role="alert">
+       <div>
+           <i class="bi bi-check-circle pe-1"></i> <strong>{{message}}</strong>
+       </div>
+       <button type="button" class="btn-close position-absolute end-0 me-2" data-bs-dismiss="alert" aria-label="Close"></button>
+   </div>                  
+{% endfor %}
+{% endif %}
