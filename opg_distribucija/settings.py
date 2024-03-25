@@ -75,8 +75,11 @@ WSGI_APPLICATION = 'opg_distribucija.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'OpgDistribucija_DB',
+        'USER': 'postgres',
+        'PASSWORD': 'IIPprojekt24',
+        'HOST': 'localhost',
     }
 }
 
