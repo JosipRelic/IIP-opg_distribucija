@@ -1,0 +1,38 @@
+.reg_korisnik{
+    margin-top: 6rem;
+    margin-bottom: 6rem;
+    margin-left: 8rem;
+    margin-right: 8rem;
+    background-color: rgb(244, 196, 176);
+    padding: 2rem;
+    border-radius: 1.5rem;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+  
+.forma_polje_unosa {
+    display: flex;
+    align-items: center;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.errorlist {
+    list-style: none;
+    text-align: center;
+    padding-left: 0px;
+}
+
