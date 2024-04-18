@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sadrzaj %}
+ <main>
+    <div class="container pb-4">
+            <form action="{% url 'registrirajOpg' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="reg_korisnik">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                            <h3>PROŠIRITE SVOJ OBITELJSKI POSAO!</h3>
+                            <p>Ispunite formu kako biste registrirali OPG.</p>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mt-2">
+                            <label>Ime</label>
+                            <div class="forma_polje_unosa">{{forma.first_name}}</div>                    
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mt-2">
+                            <label>Prezime</label>
+                            <div class="forma_polje_unosa">{{forma.last_name}}</div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mt-2">
+                            <label>Naziv OPG-a</label>
+                            <div class="forma_polje_unosa">{{opg_forma.naziv_opga}}</div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mt-2">
+                            <label>Rješenje o upisu u Upisnik PG-a (pdf ili slika)</label>
+                            <div class="forma_polje_unosa">{{opg_forma.potvrda_opga}}</div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mt-2">
+                            <label>Email</label>
+                            <div class="forma_polje_unosa">{{forma.email}}</div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mt-2">
+                            <label>Korisničko ime</label>
+                            <div class="forma_polje_unosa">{{forma.username}}</div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mt-2">
+                            <label>Lozinka</label>
+                            <div class="forma_polje_unosa">{{forma.password}}</div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mt-2">
+                            <label>Potvrdite lozinku</label>
+                            <div class="forma_polje_unosa">{{forma.confirm_password}}</div>
+                        </div>
+                        <ul class="errorlist list-unstyled mt-3 mb-0">
+                            {% for polje in forma %}
+                                {% if polje.errors %}
+                                    {% for error in polje.errors %}
+                                        <li style="color:red;">{{error}}</li>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                            <li style="color:red;">{{forma.non_field_errors}}</li>
+                            
+                        </ul>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4 text-center">
+                            <button type="submit" class="btn btn-primary">REGISTRIRAJ OPG</button>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4 mb-2 text-center">
+                            <!--UČITAVANJE ALERTA-->
+                            {% include 'includes/alerts.html' %}
+                        </div>
+                    </div>
+                </div>
+            </form>  
+    </div>
+ </main>
+{% endblock sadrzaj %}
+
