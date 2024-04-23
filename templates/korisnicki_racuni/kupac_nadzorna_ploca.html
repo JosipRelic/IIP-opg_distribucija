@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sadrzaj %}
+
+<h3> Nadzorna ploča KUPAC </h3>
+
+<p>Dobrodošao <strong>{{user.get_role}}</strong> {{user.username}} </p>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4 mb-2 text-center">
+    {% include 'includes/alerts.html' %}
+</div>
+
+{% endblock sadrzaj %}

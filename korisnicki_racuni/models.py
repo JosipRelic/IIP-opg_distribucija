@@ -72,11 +72,18 @@ class User(AbstractBaseUser):
     
     def has_module_perms(self, app_label):
         return True
+    
+    def get_role(self):
+        if self.role == 1:
+            user_role = 'opg'
+        elif self.role == 2:
+            user_role = 'kupac'
+        return user_role        
+
     class Meta:
         verbose_name = 'korisnik'
         verbose_name_plural = 'korisnici'
 
-    
 
 class KorisnickiProfil(models.Model):
     korisnik = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)

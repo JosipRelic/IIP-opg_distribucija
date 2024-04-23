@@ -5,4 +5,11 @@ from django.urls import path
 urlpatterns = [
     path('registrirajKorisnika/', views.registrirajKorisnika, name='registrirajKorisnika'),
     path('registrirajOpg/', views.registrirajOpg, name='registrirajOpg'),
+
+    path('prijava/', views.prijava, name='prijava'),
+    path('odjava/', views.odjava, name='odjava'),
+    
+    path('mojRacun/', views.mojRacun, name='mojRacun'),
+    path('kupac_nadzorna_ploca/', views.kupac_nadzorna_ploca, name='kupac_nadzorna_ploca' ),
+    path('opg_nadzorna_ploca/', views.opg_nadzorna_ploca, name='opg_nadzorna_ploca' )
 ]

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sadrzaj %}
+
+<main>
+    <div class="container pb-4">
+            <form action="{% url 'prijava' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="reg_korisnik">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                            <h3>PRIJAVA</h3>
+                            <p>Unesite podatke za prijavu.</p>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-2">
+                            <label>Email</label>
+                            <input type='email' name='email' placeholder='Unesite vašu email adresu'>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-2">
+                            <label>Lozinka</label>
+                            <input type='password' name='lozinka' placeholder='Unesite vašu lozinku'>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4 text-center">
+                            <button type="submit" class="btn btn-primary">PRIJAVI ME</button>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4 mb-2 text-center">
+                            <!--UČITAVANJE ALERTA-->
+                            {% include 'includes/alerts.html' %}
+                        </div>
+                    </div>
+                </div>
+            </form>  
+    </div>
+ </main>
+
+{% endblock sadrzaj %}

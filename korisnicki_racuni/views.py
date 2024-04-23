@@ -2,11 +2,32 @@ from django.shortcuts import render, redirect
 from .forms import FormaKorisnik
 from opg.forms import FormaOpg
 from .models import User, KorisnickiProfil
-from django.contrib import messages
+from .utils import detektirajKorisnika
+from django.contrib import messages, auth
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.exceptions import PermissionDenied
 
-# Create your views here.
+
+# Ogranici pristup stranicama kupca od strane opg-a
+def provjeri_korisnika_opg(user):
+    if user.role == 1:
+        return True
+    else: 
+        raise PermissionDenied
+
+# Ogranici pristup stranicama opg-a od strane kupca
+def provjeri_korisnika_kupac(user):
+    if user.role == 2:
+        return True
+    else: 
+        raise PermissionDenied
+
+
 def registrirajKorisnika(request):
-    if request.method == 'POST':
+    if request.user.is_authenticated:
+        messages.warning(request, 'Već ste prijavljeni!')
+        return redirect('nadzorna_ploca')
+    elif request.method == 'POST':
         forma = FormaKorisnik(request.POST)
         if forma.is_valid():       
             # KREIRAJ KORISNIKA POMOĆU FORME
@@ -41,7 +62,10 @@ def registrirajKorisnika(request):
 
 
 def registrirajOpg(request): 
-    if request.method == 'POST':
+    if request.user.is_authenticated:
+        messages.warning(request, 'Već ste prijavljeni!')
+        return redirect('nadzorna_ploca')
+    elif request.method == 'POST':
         forma = FormaKorisnik(request.POST)
         opg_forma = FormaOpg(request.POST, request.FILES)
         if forma.is_valid() and opg_forma.is_valid():
@@ -74,3 +98,43 @@ def registrirajOpg(request):
 
     return render(request, 'korisnicki_racuni/registriraj_opg.html', context)
 
+def prijava(request):
+    if request.user.is_authenticated:
+        messages.warning(request, 'Već ste prijavljeni!')
+        return redirect('mojRacun')
+    elif request.method == 'POST':
+        email = request.POST['email']
+        lozinka = request.POST['lozinka']
+
+        user = auth.authenticate(email=email, password=lozinka)   
+
+        if user is not None:
+            auth.login(request, user)
+            messages.success(request, 'Prijavljeni ste.')
+            return redirect('mojRacun')
+        else:
+            messages.error(request, 'Neispravni podatci za prijavu!')
+            return redirect('prijava')
+    return render(request, 'korisnicki_racuni/prijava.html')
+
+
+def odjava(request):
+    auth.logout(request)
+    messages.info(request, 'Odjavljeni ste.')
+    return redirect('prijava')
+
+@login_required(login_url='prijava')
+def mojRacun(request):
+    user = request.user
+    redirectUrl = detektirajKorisnika(user)
+    return redirect(redirectUrl)
+
+@login_required(login_url='prijava')
+@user_passes_test(provjeri_korisnika_kupac)
+def kupac_nadzorna_ploca(request):
+    return render(request, 'korisnicki_racuni/kupac_nadzorna_ploca.html')
+
+@login_required(login_url='prijava')
+@user_passes_test(provjeri_korisnika_opg)
+def opg_nadzorna_ploca(request):
+    return render(request, 'korisnicki_racuni/opg_nadzorna_ploca.html')
