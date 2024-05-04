@@ -1,0 +1,9 @@
+{% autoescape off %}
+
+Pozdrav, 
+
+Molimo Vas kliknite na link ispod kako biste potvrdili Vašu registraciju te aktivirali Vaš korisnički račun:
+
+http://{{domain}}{% url 'aktiviraj_racun' uidb64=uid token=token %}
+
+{% endautoescape %}

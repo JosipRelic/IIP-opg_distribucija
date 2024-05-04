@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import FormaKorisnik
 from opg.forms import FormaOpg
 from .models import User, KorisnickiProfil
-from .utils import detektirajKorisnika
+from .utils import detektirajKorisnika, posalji_verifikacijski_email
 from django.contrib import messages, auth
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import PermissionDenied
@@ -46,6 +46,10 @@ def registrirajKorisnika(request):
             korisnik = User.objects.create_user(first_name=ime, last_name=prezime, username=korisnicko_ime, email=email, password=lozinka)
             korisnik.role = User.KUPAC
             korisnik.save()
+
+            #posalji verifikacijski email
+            posalji_verifikacijski_email(request, korisnik)
+
             messages.success(request, 'Vaš račun je uspješno registriran!')
 
             return redirect('registrirajKorisnika')
@@ -82,6 +86,10 @@ def registrirajOpg(request):
             korisnicki_profil = KorisnickiProfil.objects.get(korisnik=korisnik)
             opg.korisnicki_profil = korisnicki_profil
             opg.save()
+
+            #posalji verifikacijski email
+            posalji_verifikacijski_email(request, korisnik)
+
             messages.success(request, 'Vaš račun je uspješno registriran! Sačekajte verifikaciju!')
             return redirect('registrirajOpg')
         else:
@@ -97,6 +105,11 @@ def registrirajOpg(request):
     }
 
     return render(request, 'korisnicki_racuni/registriraj_opg.html', context)
+
+def aktiviraj_racun(request, uidb64, token):
+    #aktiviraj korisnika promjenom is_active u True 
+    return
+
 
 def prijava(request):
     if request.user.is_authenticated:
