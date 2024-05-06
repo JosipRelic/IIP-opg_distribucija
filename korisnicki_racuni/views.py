@@ -6,6 +6,8 @@ from .utils import detektirajKorisnika, posalji_verifikacijski_email
 from django.contrib import messages, auth
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import PermissionDenied
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_decode
 
 
 # Ogranici pristup stranicama kupca od strane opg-a
@@ -108,8 +110,20 @@ def registrirajOpg(request):
 
 def aktiviraj_racun(request, uidb64, token):
     #aktiviraj korisnika promjenom is_active u True 
-    return
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User._default_manager.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
 
+    if user is not None and default_token_generator.check_token(user, token):
+        user.is_active = True
+        user.save()
+        messages.success(request, 'Vaš korisnički račun je aktiviran.')
+        return redirect('mojRacun')
+    else:
+        messages.error(request, 'Nevažeći link za aktivaciju!')
+        return redirect('mojRacun')
 
 def prijava(request):
     if request.user.is_authenticated:
