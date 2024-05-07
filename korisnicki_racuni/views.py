@@ -50,7 +50,9 @@ def registrirajKorisnika(request):
             korisnik.save()
 
             #posalji verifikacijski email
-            posalji_verifikacijski_email(request, korisnik)
+            email_subject = 'Molimo Vas aktivirajte Vaš račun!'
+            email_template = 'korisnicki_racuni/email/verifikacija_racuna_mailom.html'
+            posalji_verifikacijski_email(request, korisnik, email_subject, email_template)
 
             messages.success(request, 'Vaš račun je uspješno registriran!')
 
@@ -90,7 +92,9 @@ def registrirajOpg(request):
             opg.save()
 
             #posalji verifikacijski email
-            posalji_verifikacijski_email(request, korisnik)
+            email_subject = 'Molimo Vas aktivirajte Vaš račun!'
+            email_template = 'korisnicki_racuni/email/verifikacija_racuna_mailom.html'
+            posalji_verifikacijski_email(request, korisnik, email_subject, email_template)
 
             messages.success(request, 'Vaš račun je uspješno registriran! Sačekajte verifikaciju!')
             return redirect('registrirajOpg')
@@ -150,6 +154,7 @@ def odjava(request):
     messages.info(request, 'Odjavljeni ste.')
     return redirect('prijava')
 
+
 @login_required(login_url='prijava')
 def mojRacun(request):
     user = request.user
@@ -165,3 +170,57 @@ def kupac_nadzorna_ploca(request):
 @user_passes_test(provjeri_korisnika_opg)
 def opg_nadzorna_ploca(request):
     return render(request, 'korisnicki_racuni/opg_nadzorna_ploca.html')
+
+
+def zaboravljena_lozinka(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        if User.objects.filter(email=email).exists():
+            user = User.objects.get(email__exact=email)
+
+            #slanje linka za oporavak lozinke
+            email_subject = 'Ponovno postavite Vašu lozinku!'
+            email_template = 'korisnicki_racuni/email/mail_za_resetiranje_lozinke.html'
+            posalji_verifikacijski_email(request, user, email_subject, email_template)
+            messages.success(request, 'Upravo Vam je poslan link za oporavak lozinke na Vašu email adresu.')
+            return redirect('prijava')
+        else:
+            messages.error(request, 'Korisnički račun s upisanom email adresom ne postoji!')
+            return redirect('zaboravljena_lozinka')
+
+    return render(request, 'korisnicki_racuni/zaboravljena_lozinka.html')
+
+def resetiraj_lozinku_validacija(request, uidb64, token):
+    #validacija korisnika putem dekodiranja tokena i primarnog ključa korisnika
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User._default_manager.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and default_token_generator.check_token(user, token):
+        request.session['uid'] = uid
+        messages.info(request, 'Molimo Vas da ponovno postavite Vašu lozinku.')
+        return redirect('resetiraj_lozinku')
+    else:
+        messages.error(request, 'Link je istekao!')
+        return redirect('mojRacun')
+
+def resetiraj_lozinku(request):
+    if request.method == 'POST':
+        lozinka = request.POST['lozinka']
+        potvrdi_lozinku = request.POST['potvrdi_lozinku']
+
+        if lozinka == potvrdi_lozinku:
+            pk = request.session.get('uid')
+            korisnik = User.objects.get(pk=pk)
+            korisnik.set_password(lozinka)
+            korisnik.is_active = True
+            korisnik.save()
+            messages.success(request, 'Lozinka je uspješno promijenjena.')
+            return redirect('prijava')
+        else:
+            messages.error(request, 'Lozinke se ne podudaraju!')
+            return redirect('resetiraj_lozinku')
+        
+    return render(request, 'korisnicki_racuni/resetiraj_lozinku.html')

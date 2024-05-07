@@ -4,7 +4,9 @@ html {
 }
 
 body{
-    background-color: rgb(246, 237, 200);
+    /*background-color: rgb(246, 237, 200);*/
+    background: rgb(255,207,128);
+    background: radial-gradient(circle, rgba(255,207,128,1) 52%, rgba(155,201,115,1) 100%, rgba(94,193,8,1) 100%);
 }
 
 .footer {

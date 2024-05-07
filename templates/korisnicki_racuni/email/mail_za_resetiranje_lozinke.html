@@ -1,0 +1,9 @@
+{% autoescape off %}
+
+Poštovani {{user.first_name}}, 
+
+Molimo Vas kliknite na link ispod kako biste oporavili Vašu lozinku:
+
+http://{{domain}}{% url 'resetiraj_lozinku_validacija' uidb64=uid token=token %}
+
+{% endautoescape %}

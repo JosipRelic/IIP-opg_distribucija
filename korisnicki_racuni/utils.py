@@ -18,11 +18,11 @@ def detektirajKorisnika(user):
         return redirectUrl
 
 
-def posalji_verifikacijski_email(request, user):
+def posalji_verifikacijski_email(request, user, email_subject, email_template):
     from_email = settings.DEFAULT_FROM_EMAIL
     current_site = get_current_site(request)
-    mail_subject = 'Molimo Vas aktivirajte Vaš račun!'
-    message = render_to_string('korisnicki_racuni/email/verifikacija_racuna_mailom.html', {
+    mail_subject = email_subject
+    message = render_to_string(email_template, {
         'user': user,
         'domain': current_site,
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
@@ -31,3 +31,18 @@ def posalji_verifikacijski_email(request, user):
     to_email = user.email
     mail = EmailMessage(mail_subject, message, from_email, to=[to_email])
     mail.send()
+
+
+#def posalji_link_za_oporavak_lozinke(request, user):
+#    from_email = settings.DEFAULT_FROM_EMAIL
+#    current_site = get_current_site(request)
+#   mail_subject = 'Ponovno postavite Vašu lozinku!'
+#   message = render_to_string('korisnicki_racuni/email/mail_za_resetiranje_lozinke.html', {
+#       'user': user,
+#       'domain': current_site,
+#       'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+#       'token': default_token_generator.make_token(user)
+#   })
+#   to_email = user.email
+#   mail = EmailMessage(mail_subject, message, from_email, to=[to_email])
+#   mail.send()
