@@ -1,0 +1,15 @@
+{% autoescape off %}
+
+Poštovani, 
+
+{% if opg_verificiran %}
+Dobre vijesti! Vaš OPG je verificiran od strane našeg administratora. Možete započeti s prodajom Vaših proizvoda.
+
+- Vaša OPG distribucija.
+{% else %}
+Loše vijesti! Nažalost, Vaš opg nije prošao verifikaciju. Obratite nam se putem maila za više informacija.
+
+- Vaša OPG distribucija.
+{% endif %}
+
+{% endautoescape %}

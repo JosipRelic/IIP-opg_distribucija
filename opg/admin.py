@@ -6,5 +6,6 @@ from opg.models import Opg
 class OpgAdmin(admin.ModelAdmin):
     list_display = ('korisnik', 'naziv_opga', 'opg_verificiran', 'kreirano')
     list_display_links = ('korisnik', 'naziv_opga')
+    list_editable = ('opg_verificiran',)
 
 admin.site.register(Opg, OpgAdmin)
