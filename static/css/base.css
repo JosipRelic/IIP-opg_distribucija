@@ -1,17 +1,19 @@
-html {
-    position: relative;
-    min-height: 100%;
+html, body {
+    height: 100%;
+  }
+
+body {
+    display: flex;
+    flex-direction: column;
+    background: rgb(255,207,128);
+    background: radial-gradient(circle, rgba(255,207,128,1) 52%, rgba(155,201,115,1) 100%, rgba(94,193,8,1) 100%);
 }
 
-body{
-    background-color: rgb(246, 237, 200);
-}
 
 .footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 80px; 
-    line-height: 60px; 
+    flex-shrink: 0;
   }
+
+
+
 
