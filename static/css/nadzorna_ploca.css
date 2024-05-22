@@ -6,7 +6,7 @@
   object-fit: cover;
 }
 .tekst-naslovna {
-  background-color: rgba(0, 0, 0, 0.5); /* Optional: to make text readable on various background images */
+  background-color: rgba(0, 0, 0, 0.5); 
   padding: 1rem;
   border-radius: .3rem;
   color: white;
