@@ -100,6 +100,9 @@ class KorisnickiProfil(models.Model):
     kreirano = models.DateTimeField(auto_now_add=True)
     izmijenjeno = models.DateTimeField(auto_now=True)
 
+    def obje_adrese(self):
+        return f'{self.adresa_1}, {self.adresa_2}'
+
     def __str__(self):
         return self.korisnik.email
 

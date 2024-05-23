@@ -1,0 +1,10 @@
+{% load static %}
+<div class="jumbotron d-flex align-items-center mb-4" style="background: url({{opg.korisnicki_profil.naslovna_slika.url}}) no-repeat center center; background-size: cover; color: white; padding: 4rem 2rem; border-radius: 0; margin-top: 0;">
+    <div class="container d-flex align-items-center">
+        <img src="{{opg.korisnicki_profil.slika_profila.url}}" alt="slika_profila" class="slika-profila me-3">
+        <div class="text-container">
+            <h1 class="mb-1 text-uppercase">{{opg.naziv_opga}}</h1>
+            <p class="mb-0"><i class="bi bi-geo-alt me-1"></i>{{opg.korisnicki_profil.obje_adrese}}</p>
+        </div>
+    </div>
+</div>

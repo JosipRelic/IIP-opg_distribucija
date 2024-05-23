@@ -1,8 +1,9 @@
 from . import views
-from django.urls import path
+from django.urls import path, include
 
 
 urlpatterns = [
+    path('', views.mojRacun),
     path('registrirajKorisnika/', views.registrirajKorisnika, name='registrirajKorisnika'),
     path('registrirajOpg/', views.registrirajOpg, name='registrirajOpg'),
 
@@ -17,5 +18,7 @@ urlpatterns = [
 
     path('zaboravljena_lozinka/', views.zaboravljena_lozinka, name='zaboravljena_lozinka'),
     path('resetiraj_lozinku_validacija/<uidb64>/<token>/', views.resetiraj_lozinku_validacija, name='resetiraj_lozinku_validacija'),
-    path('resetiraj_lozinku/', views.resetiraj_lozinku, name='resetiraj_lozinku')
+    path('resetiraj_lozinku/', views.resetiraj_lozinku, name='resetiraj_lozinku'),
+
+    path('opg/', include('opg.urls')),
 ]

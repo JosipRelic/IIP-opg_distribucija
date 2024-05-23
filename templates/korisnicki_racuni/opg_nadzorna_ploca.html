@@ -4,15 +4,7 @@
 {% block sadrzaj %}
 
 <div class="nadzorna_ploca">
-    <div class="jumbotron d-flex align-items-center mb-4" style="background: url({% static 'images/opg_naslovna.jpg' %}) no-repeat center center; background-size: cover; color: white; padding: 4rem 2rem; border-radius: 0; margin-top: 0;">
-        <div class="container d-flex align-items-center">
-            <img src="{% static 'images/opg_profilna.jpg' %}" alt="slika_profila" class="slika-profila me-3">
-            <div class="text-container">
-                <h1 class="mb-1">NAZIV OPGA</h1>
-                <p class="mb-0"><i class="bi bi-geo-alt me-1"></i>Zagrebačka 99, Zagreb</p>
-            </div>
-        </div>
-    </div>
+        {% include "includes/naslovna_profila.html" %}
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
@@ -20,6 +12,39 @@
                     {% include 'includes/opg_izbornik.html' %}
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                            <h4 class = "text-uppercase mb-3">STANJE</h4>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                    <div class="card">
+                                        <div class = "card-header">
+                                            Ukupno narudžbi
+                                        </div>
+                                        <div class = "card-body text-center">
+                                            <a href="#" class="text-decoration-none"><h5 class="card-title">352</h5></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                  <div class="card">
+                                      <div class = "card-header">
+                                          Zarada ovaj mjesec
+                                      </div>
+                                      <div class = "card-body text-center">
+                                        <a href="#" class="text-decoration-none"><h5 class="card-title">€ 254.60</h5></a>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="card">
+                                    <div class = "card-header">Ukupna zarada</div>
+                                    <div class = "card-body text-center">
+                                        <a href="#" class="text-decoration-none"><h5 class="card-title">€ 25432.60</h5></a>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                              <br>
+                              <hr>
                             <div class="container mt-3">
                                 <div class="row">
                                         <h4>POSLJEDNJE NARUDŽBE</h4>

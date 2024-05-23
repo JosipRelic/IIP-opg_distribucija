@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_decode
-
+from opg.models import Opg
 
 # Ogranici pristup stranicama kupca od strane opg-a
 def provjeri_korisnika_opg(user):
