@@ -4,71 +4,127 @@
 {% block sadrzaj %}
 <div class="nadzorna_ploca">
     {% include "includes/naslovna_profila.html" %}
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                <!--Ucitavanje izbornika OPG-->
-                {% include 'includes/opg_izbornik.html' %}
-            </div>
-            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                        <div class="container mt-3">
-                            <div class="row">
-                                    <h4>MOJ OPG</h4>
-                                        <div class="col-lg-6 col-md-6 col-xs-6">
-                                                <select class="form-select">
-                                                    <option selected="odabrano" value="">Odaberi status narudžbe</option>
-                                                    <option value="U_tijeku">U tijeku</option>
-                                                    <option value="Otkazana">Otkazana</option>
-                                                    <option value="Zavrsena">Završena</option>
-                                                </select>
-                                        </div>                                                                 
-                            </div>
-                            
-                            <div class="table-responsive mt-3 mb-3 rounded">
-                              <table class="table table-bordered">
-                                <thead>
-                                  <tr>
-                                    <th>Broj narudžbe</th>
-                                    <th>Datum</th>
-                                    <th>Početna cijena</th>
-                                    <th>Dodatni troškovi</th>
-                                    <th>Ukupna cijena</th>
-                                    <th>Status narudžbe</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td><a href="#" data-toggle="modal" data-target="#order-det-22606">narudžba-22606</a></td>
-                                    <td>Svi 18,2024</td>
-                                    <td>€ 35.09</td>                              
-                                    <td>€ 3.90</td>
-                                    <td>€ 38.99</td>
-                                    <td><span class="status-narudzbe badge bg-success">Završena</span></td>
-                                  </tr>
-                                  <tr>
-                                    <td><a href="#" data-toggle="modal" data-target="#order-det-22606">narudžba-22583</a></td>
-                                    <td>Svi 15,2024</td>
-                                    <td>€ 23.60</td>
-                                    <td>€ 2.62</td>
-                                    <td>€ 26.22</td>                                   
-                                    <td><span class="status-narudzbe badge bg-info text-dark">U tijeku</span></td>
-                                  </tr>
-                                  <tr>
-                                    <td><a href="#" data-toggle="modal" data-target="#order-det-22606">narudžba-22493</a></td>
-                                    <td>Svi 12,2024</td>
-                                    <td>€ 25.42</td>
-                                    <td>€ 2.82</td>
-                                    <td>€ 28.24</td>                                       
-                                    <td><span class="status-narudzbe badge bg-success">Završena</span></td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                        </div>                    
-        </div>
-    </div>
-</div>
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                  <!--Ucitavanje izbornika OPG-->
+                  {% include 'includes/opg_izbornik.html' %}
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                  <h2 class="text-uppercase mb-3 mt-3">Upravljaj profilom</h2>
+                     <hr>
+                  <form action = "{% url "opg_profil" %}" method = "POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
 
+                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4 mt-3">
+                          <div class="row">
+                              <div class="text-center col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                <img src="{{profil.naslovna_slika.url}}" class="rounded opg-profil-slike" alt="naslovna_slika">
+                              </div>
+                              <div class="form-group col-lg-9 col-md-8 col-sm-8 col-xs-12">
+                                <label for="naslovnaSlika" class="form-label">Naslovna slika</label>
+                                {{profil_forma.naslovna_slika}}
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                          <div class="row">
+                            <div class="text-center col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                              <img src="{{profil.slika_profila.url}}" class="rounded opg-profil-slike" alt="slika_profila">
+                            </div>
+                              <div class="form-group col-lg-9 col-md-8 col-sm-8 col-xs-12">
+                                  <label for="slikaProfila">Slika profila</label>
+                                  {{profil_forma.slika_profila}}
+                              </div>
+                          </div>
+                      </div>    
+
+                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                        <div class="row">
+                            <div class="text-center col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                              <img src="{{opg.potvrda_opga.url}}" class="rounded opg-profil-slike" alt="potvrda_opga">
+                            </div>
+                            <div class="form-group col-lg-9 col-md-8 col-sm-8 col-xs-12">
+                                <label for="potvrdaOPGa">Potvrda OPG-a</label>
+                                {{opg_forma.potvrda_opga}}
+                            </div>
+                        </div>
+                      </div>
+                          
+                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                          <div class="form-group">
+                            <label for="promijeni_nazivOPG">Promijeni naziv OPG-a</label>
+                            {{opg_forma.naziv_opga}}
+                          </div>
+                      </div>    
+
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-2">     
+                          <div class="form-group">
+                            <label for="adresa1">Promijeni adresu 1</label>
+                            {{profil_forma.adresa_1}}
+                          </div>
+                      </div>    
+
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-2">     
+                          <div class="form-group">
+                            <label for="adresa2">Promijeni adresu 2</label>
+                            {{profil_forma.adresa_2}}
+                          </div>
+                      </div>
+
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-2">     
+                          <div class="form-group">
+                            <label for="drzava">Promijeni državu</label>
+                            {{profil_forma.drzava}}
+                          </div>
+                      </div>   
+
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-2">      
+                          <div class="form-group">
+                            <label for="zupanija">Promijeni županiju</label>
+                            {{profil_forma.zupanija}}
+                          </div>
+                      </div>
+
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-2">
+                          <div class="form-group">
+                            <label for="grad">Promijeni grad</label>
+                            {{profil_forma.grad}}
+                          </div>
+                      </div>
+
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-2">
+                          <div class="form-group">
+                            <label for="postanski_broj">Promijeni poštanski broj</label>
+                            {{profil_forma.postanski_broj}}
+                          </div>
+                      </div>
+
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-2">
+                          <div class="form-group">
+                            <label for="latituda">Promijeni latitudu</label>
+                            {{profil_forma.latituda}}
+                          </div>
+                      </div>
+
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-2">
+                          <div class="form-group">
+                            <label for="longituda">Promijeni longitudu</label>
+                            {{profil_forma.longituda}}
+                          </div>
+                      </div>
+
+                    </div>
+                      <button type="submit" class="btn btn-primary mt-3">Ažuriraj podatke</button>
+                  </form>
+              
+
+                              
+               </div>
+           </div>
+      </div>
 
 </div> <!--nadzorna_ploca_opg-->
 

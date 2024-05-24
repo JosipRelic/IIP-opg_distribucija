@@ -1,0 +1,10 @@
+.opg-profil-slike {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+  }
+
+.gumb-ucitavanje-slike{
+    font-size: 16px;
+    cursor: pointer;
+}

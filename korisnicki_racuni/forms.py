@@ -1,5 +1,5 @@
 from django import forms
-from .models import User
+from .models import User, KorisnickiProfil
 
 class FormaKorisnik(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -25,4 +25,10 @@ class FormaKorisnik(forms.ModelForm):
             raise forms.ValidationError(
                 "Lozinke se ne podudaraju!"
             )
-        
+
+class KorisnickiProfilForma(forms.ModelForm):
+    slika_profila = forms.ImageField(widget=forms.FileInput(attrs={'class': 'gumb-ucitavanje-slike'}))
+    naslovna_slika = forms.ImageField(widget=forms.FileInput(attrs={'class': 'gumb-ucitavanje-slike'}))
+    class Meta: 
+        model = KorisnickiProfil
+        fields = ['slika_profila', 'naslovna_slika', 'adresa_1', 'adresa_2', 'drzava', 'zupanija', 'grad', 'postanski_broj', 'latituda', 'longituda']
