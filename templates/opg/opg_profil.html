@@ -25,6 +25,9 @@
                               <div class="form-group col-lg-9 col-md-8 col-sm-8 col-xs-12">
                                 <label for="naslovnaSlika" class="form-label">Naslovna slika</label>
                                 {{profil_forma.naslovna_slika}}
+                                    <div class="form-group col-lg-9 col-md-8 col-sm-8 col-xs-12">
+                                      <label class="text-danger mt-2">{{profil_forma.naslovna_slika.errors}}</label>
+                                    </div>
                               </div>
                           </div>
                       </div>
@@ -37,6 +40,9 @@
                               <div class="form-group col-lg-9 col-md-8 col-sm-8 col-xs-12">
                                   <label for="slikaProfila">Slika profila</label>
                                   {{profil_forma.slika_profila}}
+                                      <div class="form-group col-lg-9 col-md-8 col-sm-8 col-xs-12">
+                                        <label class="text-danger mt-2">{{profil_forma.slika_profila.errors}}</label>
+                                      </div>
                               </div>
                           </div>
                       </div>    
@@ -49,6 +55,9 @@
                             <div class="form-group col-lg-9 col-md-8 col-sm-8 col-xs-12">
                                 <label for="potvrdaOPGa">Potvrda OPG-a</label>
                                 {{opg_forma.potvrda_opga}}
+                                    <div class="form-group col-lg-9 col-md-8 col-sm-8 col-xs-12">
+                                      <label class="text-danger mt-2">{{opg_forma.potvrda_opga.errors}}</label>
+                                    </div>
                             </div>
                         </div>
                       </div>

@@ -1,5 +1,6 @@
 from django import forms
 from .models import User, KorisnickiProfil
+from .validators import dozvoli_samo_slike_validator
 
 class FormaKorisnik(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -27,8 +28,8 @@ class FormaKorisnik(forms.ModelForm):
             )
 
 class KorisnickiProfilForma(forms.ModelForm):
-    slika_profila = forms.ImageField(widget=forms.FileInput(attrs={'class': 'gumb-ucitavanje-slike'}))
-    naslovna_slika = forms.ImageField(widget=forms.FileInput(attrs={'class': 'gumb-ucitavanje-slike'}))
+    slika_profila = forms.FileField(widget=forms.FileInput(attrs={'class': 'gumb-ucitavanje-slike'}), validators=[dozvoli_samo_slike_validator])
+    naslovna_slika = forms.FileField(widget=forms.FileInput(attrs={'class': 'gumb-ucitavanje-slike'}), validators=[dozvoli_samo_slike_validator])
     class Meta: 
         model = KorisnickiProfil
         fields = ['slika_profila', 'naslovna_slika', 'adresa_1', 'adresa_2', 'drzava', 'zupanija', 'grad', 'postanski_broj', 'latituda', 'longituda']
