@@ -65,6 +65,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'korisnicki_racuni.context_processors.dohvati_opg',
+                'korisnicki_racuni.context_processors.dohvati_google_api',
             ],
         },
     },
@@ -157,3 +158,6 @@ EMAIL_HOST='smtp.office365.com'
 EMAIL_PORT=587
 EMAIL_USE_TLS=True
 EMAIL_USE_SSL=False
+
+
+GOOGLE_API_KEY = 'AIzaSyAOHgwMw4V7Yzq0VO0xQWVonGyF-eXOHYU'
