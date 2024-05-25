@@ -89,8 +89,7 @@ class KorisnickiProfil(models.Model):
     korisnik = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
     slika_profila = models.ImageField(upload_to='korisnici/slike_profila', blank=True, null=True)
     naslovna_slika = models.ImageField(upload_to='korisnici/naslovne_slike', blank=True, null=True)
-    adresa_1 = models.CharField(max_length=100, blank=True, null=True)
-    adresa_2 = models.CharField(max_length=100, blank=True, null=True)
+    adresa = models.CharField(max_length=300, blank=True, null=True)
     drzava = models.CharField(max_length=100, blank=True, null=True)
     zupanija = models.CharField(max_length=100, blank=True, null=True)
     grad = models.CharField(max_length=100, blank=True, null=True)
@@ -99,9 +98,6 @@ class KorisnickiProfil(models.Model):
     longituda = models.CharField(max_length=50, blank=True, null=True)
     kreirano = models.DateTimeField(auto_now_add=True)
     izmijenjeno = models.DateTimeField(auto_now=True)
-
-    def obje_adrese(self):
-        return f'{self.adresa_1}, {self.adresa_2}'
 
     def __str__(self):
         return self.korisnik.email

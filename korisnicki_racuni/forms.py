@@ -28,13 +28,14 @@ class FormaKorisnik(forms.ModelForm):
             )
 
 class KorisnickiProfilForma(forms.ModelForm):
+    adresa = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Počnite pisati...', 'required': 'required'}))
     slika_profila = forms.FileField(widget=forms.FileInput(attrs={'class': 'gumb-ucitavanje-slike'}), validators=[dozvoli_samo_slike_validator])
     naslovna_slika = forms.FileField(widget=forms.FileInput(attrs={'class': 'gumb-ucitavanje-slike'}), validators=[dozvoli_samo_slike_validator])
 
     class Meta: 
         model = KorisnickiProfil
-        fields = ['slika_profila', 'naslovna_slika', 'adresa_1', 'adresa_2', 'drzava', 'zupanija', 'grad', 'postanski_broj', 'latituda', 'longituda']
-
+        fields = ['slika_profila', 'naslovna_slika', 'adresa', 'drzava', 'zupanija', 'grad', 'postanski_broj', 'latituda', 'longituda']
+ 
     def __init__(self, *args, **kwargs):
         super(KorisnickiProfilForma, self).__init__(*args, **kwargs)
         for field in self.fields:
