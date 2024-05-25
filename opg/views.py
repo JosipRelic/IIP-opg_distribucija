@@ -4,10 +4,12 @@ from .forms import FormaOpg
 from .models import Opg
 from korisnicki_racuni.forms import KorisnickiProfilForma
 from korisnicki_racuni.models import KorisnickiProfil
-
+from korisnicki_racuni.views import provjeri_korisnika_opg
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 # Create your views here.
-
+@login_required(login_url='prijava')
+@user_passes_test(provjeri_korisnika_opg)
 def opg_profil(request):
     profil = get_object_or_404(KorisnickiProfil, korisnik = request.user)
     opg = get_object_or_404(Opg, korisnik = request.user)
