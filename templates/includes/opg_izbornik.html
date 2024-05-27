@@ -1,7 +1,7 @@
 <div class="list-group">
     <a href="{% url "opg_nadzorna_ploca" %}" class="list-group-item list-group-item-action {% if '/korisnicki_racuni/opg_nadzorna_ploca/' == request.path or '/korisnicki_racuni/opg/' == request.path %} active {% endif %}"><i class="bi bi-speedometer2 me-1"></i>Nadzorna ploča</a>
     <a href="{% url "opg_profil" %}" class="list-group-item list-group-item-action {% if '/korisnicki_racuni/opg/profil/' == request.path %} active {% endif %}"><i class="bi bi-shop-window me-1"></i>Moj OPG</a>
-    <a href="#" class="list-group-item list-group-item-action"><i class="bi bi-journal-plus me-1"></i>Kreiranje ponude</a>
+    <a href="{% url "kreiranje_ponude" %}" class="list-group-item list-group-item-action {% if '/korisnicki_racuni/opg/kreiranje-ponude/' == request.path %} active {% endif %}"><i class="bi bi-journal-plus me-1"></i>Kreiranje ponude</a>
     <a href="#" class="list-group-item list-group-item-action"><i class="bi bi-bag me-1"></i>Narudžbe</a>
     <a href="#" class="list-group-item list-group-item-action"><i class="bi bi-wallet2 me-1"></i>Zarada</a>
     <a href="#" class="list-group-item list-group-item-action"><i class="bi bi-envelope-paper me-1"></i>Izjava</a>

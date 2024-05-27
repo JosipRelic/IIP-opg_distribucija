@@ -37,3 +37,7 @@ def opg_profil(request):
         'opg': opg,
     }
     return render(request, 'opg/opg_profil.html', context)
+
+
+def kreiranje_ponude(request):
+    return render(request, 'opg/kreiranje_ponude.html')
