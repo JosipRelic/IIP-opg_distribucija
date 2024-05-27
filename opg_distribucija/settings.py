@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'korisnicki_racuni',
     'opg',
+    'opg_ponuda',
 ]
  
 MIDDLEWARE = [
