@@ -4,6 +4,7 @@ from .forms import FormaOpg
 from .models import Opg
 from korisnicki_racuni.forms import KorisnickiProfilForma
 from korisnicki_racuni.models import KorisnickiProfil
+from opg_ponuda.models import KategorijeProizvoda
 from korisnicki_racuni.views import provjeri_korisnika_opg
 from django.contrib.auth.decorators import login_required, user_passes_test
 
@@ -40,4 +41,9 @@ def opg_profil(request):
 
 
 def kreiranje_ponude(request):
-    return render(request, 'opg/kreiranje_ponude.html')
+    opg = Opg.objects.get(korisnik = request.user)
+    kategorije = KategorijeProizvoda.objects.filter(opg=opg)
+    context = {
+        'kategorije': kategorije,
+    }
+    return render(request, 'opg/kreiranje_ponude.html', context)

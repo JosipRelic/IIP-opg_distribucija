@@ -8,3 +8,9 @@
     font-size: 16px;
     cursor: pointer;
 }
+
+
+.bdr {
+  border-radius: 6px;
+  overflow: hidden;
+}
