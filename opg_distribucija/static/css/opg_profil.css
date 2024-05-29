@@ -14,3 +14,10 @@
   border-radius: 6px;
   overflow: hidden;
 }
+
+.slike-proizvoda {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+

@@ -4,9 +4,14 @@ from .forms import FormaOpg
 from .models import Opg
 from korisnicki_racuni.forms import KorisnickiProfilForma
 from korisnicki_racuni.models import KorisnickiProfil
-from opg_ponuda.models import KategorijeProizvoda
+from opg_ponuda.models import KategorijeProizvoda, Proizvodi
 from korisnicki_racuni.views import provjeri_korisnika_opg
 from django.contrib.auth.decorators import login_required, user_passes_test
+
+
+def dohvati_opg(request):
+    opg = Opg.objects.get(korisnik = request.user)
+    return opg
 
 # Create your views here.
 @login_required(login_url='prijava')
@@ -40,10 +45,25 @@ def opg_profil(request):
     return render(request, 'opg/opg_profil.html', context)
 
 
+@login_required(login_url='prijava')
+@user_passes_test(provjeri_korisnika_opg)
 def kreiranje_ponude(request):
-    opg = Opg.objects.get(korisnik = request.user)
+    opg = dohvati_opg(request)
     kategorije = KategorijeProizvoda.objects.filter(opg=opg)
     context = {
         'kategorije': kategorije,
     }
     return render(request, 'opg/kreiranje_ponude.html', context)
+
+
+@login_required(login_url='prijava')
+@user_passes_test(provjeri_korisnika_opg)
+def proizvodi_po_kategoriji(request, pk=None):
+    opg = dohvati_opg(request)
+    kategorija = get_object_or_404(KategorijeProizvoda, pk=pk)
+    proizvodi = Proizvodi.objects.filter(opg=opg, kategorija_proizvoda=kategorija)
+    context = {
+        'proizvodi': proizvodi,
+        'kategorija': kategorija,
+    }
+    return render(request, 'opg/proizvodi_po_kategoriji.html', context)
