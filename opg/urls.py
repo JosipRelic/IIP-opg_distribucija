@@ -14,4 +14,5 @@ urlpatterns = [
 
     path('kreiranje-ponude/proizvod/dodaj_proizvod/', views.dodaj_proizvod, name='dodaj_proizvod'),
     path('kreiranje-ponude/proizvod/uredi_proizvod/<int:pk>/', views.uredi_proizvod, name='uredi_proizvod'),
+    path('kreiranje-ponude/proizvod/obrisi_proizvod/<int:pk>/', views.obrisi_proizvod, name='obrisi_proizvod'),
 ]

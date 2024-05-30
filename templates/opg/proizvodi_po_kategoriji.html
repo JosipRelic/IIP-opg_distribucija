@@ -32,8 +32,8 @@
                                         </a>
                                     </td>
                                     <td class="p-3">
-                                        <a href="#" class="btn btn-danger float-end ms-2 mt-1"><i class="bi bi-trash pe-1"></i>Obriši</a>
-                                        <a href="{% url "uredi_proizvod" proizvod.pk %}" class="btn btn-warning float-end mt-1"><i class="bi bi-pencil-square pe-1"></i>Uredi</a>
+                                        <a href="{% url "obrisi_proizvod" proizvod.pk %}" onclick="return confirm('Jeste li sigurni da želite obrisati ovaj proizvod?')" class="btn btn-danger float-end ms-2 mt-4"><i class="bi bi-trash pe-1"></i>Obriši</a>
+                                        <a href="{% url "uredi_proizvod" proizvod.pk %}" class="btn btn-warning float-end mt-4"><i class="bi bi-pencil-square pe-1"></i>Uredi</a>
                                     </td>
                                     </tr>
                                 {% endfor %}

@@ -40,8 +40,8 @@
                                 {% endif %}
                             {% endfor %}
 
-                            <button type="submit" class="btn btn-primary mt-2">Ažuriraj kategoriju</button>
-                            
+                            <button type="submit" class="btn btn-primary mt-2"><i class="bi bi-toggles2 pe-1"></i>Ažuriraj kategoriju</button>
+                            <a href="{% url "obrisi_kategoriju" kategorija.pk %}" onclick="return confirm('Jeste li sigurni da želite obrisati kategoriju?')" class="btn btn-danger mt-2 ms-1"><i class="bi bi-trash pe-1"></i>Obriši</a>
                         </form>
                </div>
            </div>

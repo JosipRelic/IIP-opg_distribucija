@@ -80,8 +80,8 @@
     
                             </div>   
 
-                            <button type="submit" class="btn btn-primary mt-2">Ažuriraj proizvod</button>
-                            
+                            <button type="submit" class="btn btn-primary mt-2"><i class="bi bi-toggles2 pe-1"></i>Ažuriraj proizvod</button>
+                            <a href="{% url "obrisi_proizvod" proizvodi.pk %}" onclick="return confirm('Jeste li sigurni da želite obrisati ovaj proizvod?')" class="btn btn-danger mt-2 ms-1"><i class="bi bi-trash pe-1"></i>Obriši proizvod</a>
                         </form>
                </div>
            </div>

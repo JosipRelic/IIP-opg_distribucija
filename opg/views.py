@@ -157,6 +157,9 @@ def dodaj_proizvod(request):
     }
     return render(request, 'opg/dodaj_proizvod.html', context)
 
+
+@login_required(login_url='prijava')
+@user_passes_test(provjeri_korisnika_opg)
 def uredi_proizvod(request, pk=None):
     proizvodi = get_object_or_404(Proizvodi, pk=pk)
     if request.method == 'POST':
@@ -179,3 +182,12 @@ def uredi_proizvod(request, pk=None):
         'proizvodi': proizvodi,
     }
     return render(request, 'opg/uredi_proizvod.html', context)
+
+
+@login_required(login_url='prijava')
+@user_passes_test(provjeri_korisnika_opg)
+def obrisi_proizvod(request, pk=None):
+    proizvod = get_object_or_404(Proizvodi, pk=pk)
+    proizvod.delete()
+    messages.success(request, 'Proizvod je uspješno obrisan.')
+    return redirect('proizvodi_po_kategoriji', proizvod.kategorija_proizvoda.pk)
