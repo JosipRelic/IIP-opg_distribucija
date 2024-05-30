@@ -8,3 +8,54 @@
     font-size: 16px;
     cursor: pointer;
 }
+
+
+.bdr {
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.slike-proizvoda {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+
+textarea#id_opis_kategorije{
+  border-radius: 5px;
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 10px;
+  max-height: 150px;
+}
+
+
+textarea#id_opis_proizvoda{
+  border-radius: 5px;
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 10px;
+  max-height: 150px;
+}
+
+
+select#id_kategorija_proizvoda{
+  border-radius: 3px;
+  width: 100%;
+  border: 1px solid #ccc;
+  height: 43px;
+}
+
+input#id_cijena_proizvoda{
+  border-radius: 5px;
+  width: 95%;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+input#id_slika_proizvoda{
+  border-radius: 5px;
+  width: 100%;
+  padding: 8px;
+}
+

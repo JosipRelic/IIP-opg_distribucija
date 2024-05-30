@@ -29,6 +29,11 @@
                                             <p class="mb-0 fw-bold">{{proizvod}}</p>
                                             <small class="text-muted">{{proizvod.opis_proizvoda}}</small>
                                             <p class="text-muted fw-bold">Cijena: {{proizvod.cijena_proizvoda}}€</p>
+                                            {% if proizvod.proizvod_dostupan %}
+                                            <span class="badge bg-success">Na zalihi</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">Rasprodano</span>
+                                        {% endif %}
                                         </a>
                                     </td>
                                     <td class="p-3">

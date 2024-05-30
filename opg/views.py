@@ -145,12 +145,14 @@ def dodaj_proizvod(request):
             proizvod.opg = dohvati_opg(request)
             proizvod.slug = slugify(naziv_proizvoda)
             forma_proizvodi.save()
-            messages.success(request, 'Nova proizvod kreiran.')
+            messages.success(request, 'Novi proizvod kreiran.')
             return redirect('proizvodi_po_kategoriji', proizvod.kategorija_proizvoda.pk)
         else:
             print(forma_proizvodi.errors)
     else:
         forma_proizvodi = FormaProizvodi()
+        #filtriranje kategorije po specificnom opgu !!! PRONAĆI NAČIN KAKO HANDLEAT AKO KATEGORIJA POSTOJI U BAZI ALI NE ZA TAJ OPG...
+        forma_proizvodi.fields['kategorija_proizvoda'].queryset = KategorijeProizvoda.objects.filter(opg = dohvati_opg(request))
 
     context = {
         'forma_proizvodi': forma_proizvodi,
@@ -176,6 +178,7 @@ def uredi_proizvod(request, pk=None):
             print(forma_proizvodi.errors)
     else:
         forma_proizvodi = FormaProizvodi(instance=proizvodi)
+        forma_proizvodi.fields['kategorija_proizvoda'].queryset = KategorijeProizvoda.objects.filter(opg = dohvati_opg(request))
     
     context = {
         'forma_proizvodi': forma_proizvodi,

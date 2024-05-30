@@ -14,28 +14,39 @@
                   <h3 class="text-uppercase mb-3 mt-3">Kreiraj ponudu</h3>
                   <hr>
                   <h5 class="float-start text-primary fw-bold">Moje kategorije:</h5>
-                  <a href="{% url "dodaj_proizvod" %}" class="btn btn-success float-end mb-3 ms-2 ps-1"><i class="bi bi-plus"></i>Dodaj proizvod</a>
-                  <a href="{% url "dodaj_kategoriju" %}" class="btn btn-info float-end mb-3 ms-2 ps-1"><i class="bi bi-plus"></i>Dodaj kategoriju</a>
-                  <table class="table table-hover table-borderless bdr">
-                      <tbody>
-                        {% for kategorija in kategorije %}
-                            <tr class="border-bottom">
-                            <td class="ps-4 pt-3 pb-3 text-start">{{forloop.counter}}.</td>
-                            <td class="pt-3 pb-3">
-                                <a href="{% url "proizvodi_po_kategoriji"  kategorija.pk %}" class="text-decoration-none">
-                                    <p class="mb-0 fw-bold">{{kategorija}}</p>
-                                    <small class="text-muted">{{kategorija.opis_kategorije}}</small>
-                                </a>
-                            </td>
-                            <td class="p-3">
-                                <a href="{% url "obrisi_kategoriju" kategorija.pk %}" onclick="return confirm('Jeste li sigurni da želite obrisati kategoriju?')" class="btn btn-danger float-end ms-2 mt-1"><i class="bi bi-trash pe-1"></i>Obriši</a>
-                                <a href="{% url "uredi_kategoriju"  kategorija.pk %}" class="btn btn-warning float-end mt-1"><i class="bi bi-pencil-square pe-1"></i>Uredi</a>
-                            </td>
-                            </tr>
-                        {% endfor %}
-                      </tbody>
-                  </table>
-              
+                  {% if kategorije %}
+                        <a href="{% url "dodaj_proizvod" %}" class="btn btn-success float-end mb-3 ms-2 ps-1"><i class="bi bi-plus"></i>Dodaj proizvod</a>
+                        <a href="{% url "dodaj_kategoriju" %}" class="btn btn-info float-end mb-3 ms-2 ps-1"><i class="bi bi-plus"></i>Dodaj kategoriju</a>
+                        <table class="table table-hover table-borderless bdr">
+                            <tbody>
+                                {% for kategorija in kategorije %}
+                                    <tr class="border-bottom">
+                                    <td class="ps-4 pt-3 pb-3 text-start">{{forloop.counter}}.</td>
+                                    <td class="pt-3 pb-3">
+                                        <a href="{% url "proizvodi_po_kategoriji"  kategorija.pk %}" class="text-decoration-none">
+                                            <p class="mb-0 fw-bold">{{kategorija}}</p>
+                                            <small class="text-muted">{{kategorija.opis_kategorije}}</small>
+                                        </a>
+                                    </td>
+                                    <td class="p-3">
+                                        <a href="{% url "obrisi_kategoriju" kategorija.pk %}" onclick="return confirm('Jeste li sigurni da želite obrisati kategoriju?')" class="btn btn-danger float-end ms-2 mt-1"><i class="bi bi-trash pe-1"></i>Obriši</a>
+                                        <a href="{% url "uredi_kategoriju"  kategorija.pk %}" class="btn btn-warning float-end mt-1"><i class="bi bi-pencil-square pe-1"></i>Uredi</a>
+                                    </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                {% else %}
+                    <br><br>
+                    <h2 class="text-center">Nije pronađena niti jedna kategorija proizvoda...</h2> 
+                        <div class="container">
+                            <div class="row">
+                                <div class="col text-center">
+                                    <a href="{% url "dodaj_kategoriju" %}" class="btn btn-info mt-3"><i class="bi bi-plus"></i>Dodaj kategoriju</a>
+                                </div>
+                            </div>
+                        </div>
+                {% endif %}
 
                               
                </div>
