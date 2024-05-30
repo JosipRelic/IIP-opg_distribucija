@@ -17,6 +17,9 @@ class KategorijeProizvoda(models.Model):
         verbose_name = 'Kategorije proizvoda'
         verbose_name_plural = 'Kategorije proizvoda'
 
+    def clean(self):
+        self.naziv_kategorije = self.naziv_kategorije.capitalize()
+
 
 class Proizvodi(models.Model):
     opg = models.ForeignKey(Opg, on_delete=models.CASCADE)

@@ -51,7 +51,7 @@ def opg_profil(request):
 @user_passes_test(provjeri_korisnika_opg)
 def kreiranje_ponude(request):
     opg = dohvati_opg(request)
-    kategorije = KategorijeProizvoda.objects.filter(opg=opg)
+    kategorije = KategorijeProizvoda.objects.filter(opg=opg).order_by('kreirano')
     context = {
         'kategorije': kategorije,
     }
@@ -81,6 +81,8 @@ def dodaj_kategoriju(request):
             forma_kategorije.save()
             messages.success(request, 'Nova kategorija kreirana.')
             return redirect('kreiranje_ponude')
+        else:
+            print(forma_kategorije.errors)
     else:
         forma_kategorije = FormaKategorije()
     
@@ -88,3 +90,27 @@ def dodaj_kategoriju(request):
         'forma_kategorije': forma_kategorije,
     }
     return render(request, 'opg/dodaj_kategoriju.html', context)
+
+
+def uredi_kategoriju(request, pk=None):
+    kategorije= get_object_or_404(KategorijeProizvoda, pk=pk)
+    if request.method == 'POST':
+        forma_kategorije = FormaKategorije(request.POST, instance=kategorije)
+        if forma_kategorije.is_valid():
+            naziv_kategorije = forma_kategorije.cleaned_data['naziv_kategorije']
+            kategorije = forma_kategorije.save(commit=False)
+            kategorije.opg = dohvati_opg(request)
+            kategorije.slug = slugify(naziv_kategorije)
+            forma_kategorije.save()
+            messages.success(request, 'Kategorija uspješno ažurirana.')
+            return redirect('kreiranje_ponude')
+        else:
+            print(forma_kategorije.errors)
+    else:
+        forma_kategorije = FormaKategorije(instance=kategorije)
+    
+    context = {
+        'forma_kategorije': forma_kategorije,
+        'kategorija': kategorije,
+    }
+    return render(request, 'opg/uredi_kategoriju.html', context)

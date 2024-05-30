@@ -9,4 +9,5 @@ urlpatterns = [
     path('kreiranje-ponude/kategorija_proizvoda/<int:pk>/', views.proizvodi_po_kategoriji, name='proizvodi_po_kategoriji'),
 
     path('kreiranje-ponude/kategorija_proizvoda/dodaj_kategoriju/', views.dodaj_kategoriju, name='dodaj_kategoriju'),
+    path('kreiranje-ponude/kategorija_proizvoda/uredi_kategoriju/<int:pk>/', views.uredi_kategoriju, name='uredi_kategoriju'),
 ]
