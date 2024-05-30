@@ -1,14 +1,18 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from .forms import FormaOpg
-from opg_ponuda.forms import FormaKategorije
-from .models import Opg
-from korisnicki_racuni.forms import KorisnickiProfilForma
-from korisnicki_racuni.models import KorisnickiProfil
-from opg_ponuda.models import KategorijeProizvoda, Proizvodi
-from korisnicki_racuni.views import provjeri_korisnika_opg
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.template.defaultfilters import slugify
+
+from .forms import FormaOpg
+from opg_ponuda.forms import FormaKategorije, FormaProizvodi
+from korisnicki_racuni.forms import KorisnickiProfilForma
+
+from .models import Opg
+from korisnicki_racuni.models import KorisnickiProfil
+from opg_ponuda.models import KategorijeProizvoda, Proizvodi
+
+from korisnicki_racuni.views import provjeri_korisnika_opg
+
 
 
 def dohvati_opg(request):
@@ -70,6 +74,9 @@ def proizvodi_po_kategoriji(request, pk=None):
     }
     return render(request, 'opg/proizvodi_po_kategoriji.html', context)
 
+
+@login_required(login_url='prijava')
+@user_passes_test(provjeri_korisnika_opg)
 def dodaj_kategoriju(request):
     if request.method == 'POST':
         forma_kategorije = FormaKategorije(request.POST)
@@ -92,6 +99,8 @@ def dodaj_kategoriju(request):
     return render(request, 'opg/dodaj_kategoriju.html', context)
 
 
+@login_required(login_url='prijava')
+@user_passes_test(provjeri_korisnika_opg)
 def uredi_kategoriju(request, pk=None):
     kategorije= get_object_or_404(KategorijeProizvoda, pk=pk)
     if request.method == 'POST':
@@ -116,8 +125,57 @@ def uredi_kategoriju(request, pk=None):
     return render(request, 'opg/uredi_kategoriju.html', context)
 
 
+@login_required(login_url='prijava')
+@user_passes_test(provjeri_korisnika_opg)
 def obrisi_kategoriju(request, pk=None):
     kategorija = get_object_or_404(KategorijeProizvoda, pk=pk)
     kategorija.delete()
     messages.success(request, 'Kategorija je uspješno obrisana.')
     return redirect('kreiranje_ponude')
+
+
+@login_required(login_url='prijava')
+@user_passes_test(provjeri_korisnika_opg)
+def dodaj_proizvod(request):
+    if request.method == 'POST':
+        forma_proizvodi = FormaProizvodi(request.POST, request.FILES)
+        if forma_proizvodi.is_valid():
+            naziv_proizvoda = forma_proizvodi.cleaned_data['naziv_proizvoda']
+            proizvod = forma_proizvodi.save(commit=False)
+            proizvod.opg = dohvati_opg(request)
+            proizvod.slug = slugify(naziv_proizvoda)
+            forma_proizvodi.save()
+            messages.success(request, 'Nova proizvod kreiran.')
+            return redirect('proizvodi_po_kategoriji', proizvod.kategorija_proizvoda.pk)
+        else:
+            print(forma_proizvodi.errors)
+    else:
+        forma_proizvodi = FormaProizvodi()
+
+    context = {
+        'forma_proizvodi': forma_proizvodi,
+    }
+    return render(request, 'opg/dodaj_proizvod.html', context)
+
+def uredi_proizvod(request, pk=None):
+    proizvodi = get_object_or_404(Proizvodi, pk=pk)
+    if request.method == 'POST':
+        forma_proizvodi = FormaProizvodi(request.POST, request.FILES, instance=proizvodi)
+        if forma_proizvodi.is_valid():
+            naziv_proizvoda = forma_proizvodi.cleaned_data['naziv_proizvoda']
+            proizvodi = forma_proizvodi.save(commit=False)
+            proizvodi.opg = dohvati_opg(request)
+            proizvodi.slug = slugify(naziv_proizvoda)
+            forma_proizvodi.save()
+            messages.success(request, 'Proizvod je uspješno ažuriran.')
+            return redirect('proizvodi_po_kategoriji', proizvodi.kategorija_proizvoda.pk)
+        else:
+            print(forma_proizvodi.errors)
+    else:
+        forma_proizvodi = FormaProizvodi(instance=proizvodi)
+    
+    context = {
+        'forma_proizvodi': forma_proizvodi,
+        'proizvodi': proizvodi,
+    }
+    return render(request, 'opg/uredi_proizvod.html', context)

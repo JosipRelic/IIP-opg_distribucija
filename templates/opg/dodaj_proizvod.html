@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block sadrzaj %}
+<div class="nadzorna_ploca">
+    {% include "includes/naslovna_profila.html" %}
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                  <!--Ucitavanje izbornika OPG-->
+                  {% include 'includes/opg_izbornik.html' %}
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                  <h3 class="text-uppercase mb-3 mt-3">Kreiraj ponudu</h3>
+                  <hr>
+                  <button class="btn btn-secondary float-start me-2" onclick="history.back()"><i class="bi bi-arrow-left pe-2"></i>Natrag</button>
+                  <h5 class="float-start text-success fw-bold mt-1">Dodaj novi proizvod:</h5>
+                        <br>
+                        <br>
+                        <form action="{% url 'dodaj_proizvod' %}" method="POST" enctype="multipart/form-data"> 
+                            {% csrf_token %}
+                        <div class="row mt-3">
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 mb-2">
+                                <div class="form-group">
+                                  <label for="dodaj_naziv_proizvoda">Naziv proizvoda:*</label>
+                                  {{forma_proizvodi.naziv_proizvoda}}
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 mb-2">
+                                <div class="form-group">
+                                  <label for="dodaj_kategoriju_proizvoda">Kategorija proizvoda:*</label>
+                                  {{forma_proizvodi.kategorija_proizvoda}}
+                                </div>
+                            </div>      
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                <div class="form-group">
+                                  <label for="dodaj_opis_proizvoda">Opis proizvoda:</label>
+                                  {{forma_proizvodi.opis_proizvoda}}
+                                </div>
+                            </div>  
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 mb-2">
+                                <div class="form-group">
+                                  <label for="dodaj_cijenu_proizvoda">Cijena proizvoda:*</label>
+                                  {{forma_proizvodi.cijena_proizvoda}}<span class="ms-1">€</span>
+                                </div>
+                            </div>  
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 mb-2">
+                                <div class="form-group">
+                                  <label for="dodaj_sliku_proizvoda">Slika proizvoda:</label>
+                                  {{forma_proizvodi.slika_proizvoda}}
+                                </div>
+                            </div>  
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                <div class="form-group d-flex align-items-center mt-2">
+                                        <label for="dodaj_dostupnost_proizvoda" class="me-2 mt-1">Proizvod dostupan:</label>
+                                         {{forma_proizvodi.proizvod_dostupan}}
+                                  
+                                </div>
+                            </div>  
+                            
+                            {% for polje in forma_proizvodi %}
+                                {% if polje.errors %}
+                                    {% for error in polje.errors %}
+                                           <p class="text-danger fw-bold">{{error}}</p> 
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+
+                        </div>   
+                            <button type="submit" class="btn btn-success mt-2">Kreiraj proizvod</button>
+                        
+                        </form>
+               </div>
+           </div>
+      </div>
+
+</div> <!--nadzorna_ploca_opg-->
+
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4 mb-2 text-center">
+{% include 'includes/alerts.html' %}
+</div>
+
+{% endblock sadrzaj %}
+
+
+
