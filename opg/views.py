@@ -1,12 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from .forms import FormaOpg
+from opg_ponuda.forms import FormaKategorije
 from .models import Opg
 from korisnicki_racuni.forms import KorisnickiProfilForma
 from korisnicki_racuni.models import KorisnickiProfil
 from opg_ponuda.models import KategorijeProizvoda, Proizvodi
 from korisnicki_racuni.views import provjeri_korisnika_opg
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.template.defaultfilters import slugify
 
 
 def dohvati_opg(request):
@@ -67,3 +69,22 @@ def proizvodi_po_kategoriji(request, pk=None):
         'kategorija': kategorija,
     }
     return render(request, 'opg/proizvodi_po_kategoriji.html', context)
+
+def dodaj_kategoriju(request):
+    if request.method == 'POST':
+        forma_kategorije = FormaKategorije(request.POST)
+        if forma_kategorije.is_valid():
+            naziv_kategorije = forma_kategorije.cleaned_data['naziv_kategorije']
+            kategorija = forma_kategorije.save(commit=False)
+            kategorija.opg = dohvati_opg(request)
+            kategorija.slug = slugify(naziv_kategorije)
+            forma_kategorije.save()
+            messages.success(request, 'Nova kategorija kreirana.')
+            return redirect('kreiranje_ponude')
+    else:
+        forma_kategorije = FormaKategorije()
+    
+    context = {
+        'forma_kategorije': forma_kategorije,
+    }
+    return render(request, 'opg/dodaj_kategoriju.html', context)

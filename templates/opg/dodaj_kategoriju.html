@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block sadrzaj %}
+<div class="nadzorna_ploca">
+    {% include "includes/naslovna_profila.html" %}
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                  <!--Ucitavanje izbornika OPG-->
+                  {% include 'includes/opg_izbornik.html' %}
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                  <h3 class="text-uppercase mb-3 mt-3">Kreiraj ponudu</h3>
+                  <hr>
+                  <h5 class="float-start">Dodaj novu kategoriju</h5>
+                        <br>
+                        <br>
+                        <form action="{% url 'dodaj_kategoriju' %}" method="POST"> 
+                            {% csrf_token %}
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                <div class="form-group">
+                                  <label for="dodaj_naziv_kategorije">Naziv kategorije:</label>
+                                  {{forma_kategorije.naziv_kategorije}}
+                                </div>
+                            </div>    
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                <div class="form-group">
+                                  <label for="dodaj_opis_kategorije">Opis kategorije:</label>
+                                  {{forma_kategorije.opis_kategorije}}
+                                </div>
+                            </div>  
+                            <button type="submit" class="btn btn-success mt-2">Kreiraj kategoriju</button>
+                            
+                        </form>
+               </div>
+           </div>
+      </div>
+
+</div> <!--nadzorna_ploca_opg-->
+
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4 mb-2 text-center">
+{% include 'includes/alerts.html' %}
+</div>
+
+{% endblock sadrzaj %}
+
+
+

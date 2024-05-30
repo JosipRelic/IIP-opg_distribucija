@@ -21,3 +21,8 @@
   object-fit: cover;
 }
 
+textarea#id_opis_kategorije{
+  border-radius: 5px;
+  width: 100%;
+  border: none;
+}
