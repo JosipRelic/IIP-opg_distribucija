@@ -114,3 +114,10 @@ def uredi_kategoriju(request, pk=None):
         'kategorija': kategorije,
     }
     return render(request, 'opg/uredi_kategoriju.html', context)
+
+
+def obrisi_kategoriju(request, pk=None):
+    kategorija = get_object_or_404(KategorijeProizvoda, pk=pk)
+    kategorija.delete()
+    messages.success(request, 'Kategorija je uspješno obrisana.')
+    return redirect('kreiranje_ponude')
