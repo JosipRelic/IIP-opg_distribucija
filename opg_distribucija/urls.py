@@ -24,5 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.pocetna_stranica, name= 'pocetna_stranica'),
     path('', include('korisnicki_racuni.urls')),
+
+    path('e_trznica/', include('e_trznica.urls')),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

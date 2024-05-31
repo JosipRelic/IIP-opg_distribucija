@@ -21,10 +21,11 @@
                   </li> 
                
                   <li class="ms-1 me-1">
-                      <button type="button" class="btn btn-primary w-100 mb-1 mt-1 ms-1 me-1">
+                      <a href="{% url "e_trznica" %}"><button type="button" class="btn btn-primary w-100 mb-1 mt-1 ms-1 me-1">
                         <i class="bi bi-shop-window"></i>
                         E-TRŽNICA
                         </button> 
+                      </a>
                   </li>
                 {% if user.is_authenticated is not True %}
                   <li class="ms-1 me-1">  

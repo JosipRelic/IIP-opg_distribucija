@@ -49,62 +49,17 @@
           </div>
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ms-4">
             <ul class="list-unstyled d-flex me-5">
-              <li class="ps-3">
-                <div class="najbolji_opgovi"> 
-                  <a href="">
-                    <img src="https://placebear.com/g/500/500" class="img-fluid" alt="">
-                  </a> 
-                </div>
-              </li>
-              <li class="ps-3">
-                <div class="najbolji_opgovi"> 
-                  <a href="">
-                    <img src="https://placebear.com/g/500/500" class="img-fluid" alt="">
-                  </a> 
-                </div>
-              </li>
-              <li class="ps-3">
-                <div class="najbolji_opgovi"> 
-                  <a href="">
-                    <img src="https://placebear.com/g/500/500" class="img-fluid" alt="">
-                  </a> 
-                </div>
-              </li>
-              <li class="ps-3">
-                <div class="najbolji_opgovi"> 
-                  <a href="">
-                    <img src="https://placebear.com/g/500/500" class="img-fluid" alt="">
-                  </a> 
-                </div>
-              </li>
-              <li class="ps-3">
-                <div class="najbolji_opgovi"> 
-                  <a href="">
-                    <img src="https://placebear.com/g/500/500" class="img-fluid" alt="">
-                  </a> 
-                </div>
-              </li>
-              <li class="ps-3">
-                <div class="najbolji_opgovi"> 
-                  <a href="">
-                    <img src="https://placebear.com/g/500/500" class="img-fluid" alt="">
-                  </a> 
-                </div>
-              </li>
-              <li class="ps-3">
-                <div class="najbolji_opgovi"> 
-                  <a href="">
-                    <img src="https://placebear.com/g/500/500" class="img-fluid" alt="">
-                  </a> 
-                </div>
-              </li>
-              <li class="ps-3">
-                <div class="najbolji_opgovi"> 
-                  <a href="">
-                    <img src="https://placebear.com/g/500/500" class="img-fluid" alt="">
-                  </a> 
-                </div>
-              </li>
+              {% for opg in opgovi %}
+                  <li class="ps-3">
+                    <div class="najbolji_opgovi"> 
+                      {% if opg.korisnicki_profil.slika_profila %}
+                           <a href=""><img src="{{opg.korisnicki_profil.slika_profila.url}}" class="img-fluid" alt="opg_slika_profila"></a> 
+                      {% else %}
+                          <a href=""><img src="{% static "images/default-profile.jpg" %}" class="img-fluid" alt="opg_slika_profila"></a> 
+                      {% endif %}
+                    </div>
+                  </li>
+              {% endfor %}
             </ul>
           </div>
         </div>
@@ -118,75 +73,34 @@
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center mt-5 mb-5">
             <div class="najpopularniji_opgovi">
               <ul class="row list-unstyled ms-3 pb-5">
-
-                <li class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <div class="card mb-4" style="max-width: 600px;">
-                    <div class="row g-0">
-                      <div class="col-md-4">
-                        <img src="https://placebear.com/g/500/500" class="img-fluid rounded-start" alt="...">
-                      </div>
-                      <div class="col-md-8">
-                        <div class="card-body text-start">
-                          <h5 class="card-title">Naziv restorana</h5>
-                          <p class="card-text">Adresa restorana</p>
-                          <p class="card-text"><small class="text-body-secondary">30 km udaljenost</small></p>
+                {% for opg in opgovi %}
+                      <li class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <a href="" class="text-decoration-none">
+                        <div class="card mb-4" style="max-width: 600px;">
+                          <div class="row g-0">
+                            <div class="col-md-4">
+                              {% if opg.korisnicki_profil.slika_profila %}
+                                  <img src="{{opg.korisnicki_profil.slika_profila.url}}" class="img-fluid rounded-start" alt="opg_slika_profila">
+                              {% else %}
+                                  <img src="{% static "images/default-profile.jpg" %}" class="img-fluid rounded-start" alt="opg_slika_profila">
+                              {% endif %}
+                            </div>
+                            <div class="col-md-8">
+                              <div class="card-body text-start">
+                                <h5 class="card-title">{{opg.naziv_opga}}</h5>
+                                {% if opg.korisnicki_profil.adresa %}
+                                    <p class="card-text">{{opg.korisnicki_profil.adresa}}</p>
+                                {% else %}
+                                    <p class="card-text d-none">{{opg.korisnicki_profil.adresa}}</p>
+                                {% endif %}
+                                <p class="card-text"><small class="text-body-secondary">30 km udaljenost</small></p>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-
-
-                <li class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <div class="card mb-4" style="max-width: 600px;">
-                    <div class="row g-0">
-                      <div class="col-md-4">
-                        <img src="https://placebear.com/g/500/500" class="img-fluid rounded-start" alt="...">
-                      </div>
-                      <div class="col-md-8">
-                        <div class="card-body text-start">
-                          <h5 class="card-title">Naziv restorana</h5>
-                          <p class="card-text">Adresa restorana</p>
-                          <p class="card-text"><small class="text-body-secondary">30 km udaljenost</small></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-
-                <li class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <div class="card mb-4" style="max-width: 600px;">
-                    <div class="row g-0">
-                      <div class="col-md-4">
-                        <img src="https://placebear.com/g/500/500" class="img-fluid rounded-start" alt="...">
-                      </div>
-                      <div class="col-md-8">
-                        <div class="card-body text-start">
-                          <h5 class="card-title">Naziv restorana</h5>
-                          <p class="card-text">Adresa restorana</p>
-                          <p class="card-text"><small class="text-body-secondary">30 km udaljenost</small></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                
-                <li class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <div class="card mb-4" style="max-width: 600px;">
-                    <div class="row g-0">
-                      <div class="col-md-4">
-                        <img src="https://placebear.com/g/500/500" class="img-fluid rounded-start" alt="...">
-                      </div>
-                      <div class="col-md-8">
-                        <div class="card-body text-start">
-                          <h5 class="card-title">Naziv restorana</h5>
-                          <p class="card-text">Adresa restorana</p>
-                          <p class="card-text"><small class="text-body-secondary">30 km udaljenost</small></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
+                      </a>
+                      </li>
+                {% endfor %}
               </ul>
             </div>
           </div>

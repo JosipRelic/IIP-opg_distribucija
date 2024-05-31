@@ -8,6 +8,7 @@ class Opg(models.Model):
     korisnik = models.OneToOneField(User, related_name='korisnik', on_delete=models.CASCADE)
     korisnicki_profil = models.OneToOneField(KorisnickiProfil, related_name='korisnicki_profil', on_delete=models.CASCADE)
     naziv_opga = models.CharField(max_length=100)
+    opg_slug = models.SlugField(max_length=100, unique=True)
     potvrda_opga = models.ImageField(upload_to='opg/potvrda')
     opg_verificiran = models.BooleanField(default=False) 
     kreirano = models.DateTimeField(auto_now_add=True)

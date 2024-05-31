@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'korisnicki_racuni',
     'opg',
     'opg_ponuda',
+    'e_trznica',
 ]
  
 MIDDLEWARE = [

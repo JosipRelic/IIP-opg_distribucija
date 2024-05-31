@@ -9,6 +9,7 @@ from django.core.exceptions import PermissionDenied
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_decode
 from opg.models import Opg
+from django.template.defaultfilters import slugify
 
 # Ogranici pristup stranicama kupca od strane opg-a
 def provjeri_korisnika_opg(user):
@@ -72,7 +73,7 @@ def registrirajKorisnika(request):
 def registrirajOpg(request): 
     if request.user.is_authenticated:
         messages.warning(request, 'Već ste prijavljeni!')
-        return redirect('nadzorna_ploca')
+        return redirect('mojRacun')
     elif request.method == 'POST':
         forma = FormaKorisnik(request.POST)
         opg_forma = FormaOpg(request.POST, request.FILES)
@@ -87,6 +88,8 @@ def registrirajOpg(request):
             korisnik.save()
             opg = opg_forma.save(commit=False)
             opg.korisnik = korisnik
+            naziv_opga = opg_forma.cleaned_data['naziv_opga']
+            opg.opg_slug = slugify(naziv_opga)+'-'+str(korisnik.pk)
             korisnicki_profil = KorisnickiProfil.objects.get(korisnik=korisnik)
             opg.korisnicki_profil = korisnicki_profil
             opg.save()
