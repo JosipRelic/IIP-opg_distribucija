@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block sadrzaj %}
+
+
+{% load static %}
+
+
+<div>
+        <div class="jumbotron d-flex align-items-center mb-4"  title="naslovna" style="background: url({% if opg.korisnicki_profil.naslovna_slika %} {{opg.korisnicki_profil.naslovna_slika.url}} {% else %} {% static "images/default-cover.jpg" %} {% endif %}) no-repeat center center; background-size: cover; color: white; padding: 4rem 2rem; border-radius: 0; margin-top: 0;">
+            <div class="container d-flex align-items-center">
+                <img src="{% if opg.korisnicki_profil.slika_profila %} {{opg.korisnicki_profil.slika_profila.url}} {% else %} {% static "images/default-profile.jpg" %} {% endif %}" alt="slika_profila" class="slika-profila me-3">
+                <div class="text-container">
+                    <h1 class="mb-1 text-uppercase">{{opg.naziv_opga}}</h1>
+                    <p class="mb-0">{% if opg.korisnicki_profil.adresa %}<i class="bi bi-geo-alt me-1"></i>{{opg.korisnicki_profil.adresa}} {% else %} <a href="" class="text-decoration-none d-none"> Adresa nije dodana </a> {% endif %}</p>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <div class="list-group" style="background-color:transparent;">
+                        <h5><i class="bi bi-journal-text me-1"></i>KATEGORIJE</h5>
+                        {% for kategorija in kategorije_proizvoda %}
+                            <a href="#" class="list-group-item list-group-item-action text-primary"></i>{{kategorija.naziv_kategorije}}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 mt-3">
+                        <h4 class="ms-3"><i class="bi bi-shop-window me-2"></i>Ponuda proizvoda</h4>
+                            <div class="container mt-3">
+                                        <div class="row">
+                                    
+                                                    <div class="col-lg-6 col-md-6 col-xs-6 mb-3">
+                                                            <select class="form-select">
+                                                                <option selected="odabrano" value="">Odaberi radno vrijeme</option>
+                                                                <option value="radno_vrijeme1">Ponedjeljak 08:00-18:00</option>
+                                                                <option value="radno_vrijeme2">Utorak 08:00-18:00</option>
+                                                                <option value="radno_vrijeme3">Srijeda 08:00-18:00</option>
+                                                            </select>
+                                                    </div>                                                                 
+                                        </div>
+                                        {% for kategorija in kategorije_proizvoda %}
+                                            <div class="">
+                                                <div class="card rounded-0 border-0">
+                                                    <div class="card-header text-uppercase fw-bold text-primary">
+                                                        {{kategorija}}
+                                                        <p class="card-text fw-normal text-lowercase text-muted">{{kategorija.opis_kategorije}}</p>
+                                                    </div>         
+                                                    <div class="card-body">
+                                                        {% for proizvod in kategorija.proizvodi.all %}
+                                                        
+                                                        <div class="row mb-2">
+                                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                                                <img src="{{proizvod.slika_proizvoda.url}}" class="slike-proizvoda"></img>
+                                                            </div>
+                                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                                <h6 class="card-title">{{proizvod.naziv_proizvoda}}</h6>
+                                                                <p class="card-text text-muted ">{{proizvod.opis_proizvoda}}</p>
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                                                <span class="fw-bold">{{proizvod.cijena_proizvoda}} €<i class="bi bi-plus-square ms-3 text-success"></i></span>
+                                                            </div>           
+                                                        </div>
+                                                            
+                            
+                                                        
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                            </div>                    
+            </div>
+        </div>
+    </div>
+
+   
+</div> <!--nadzorna_ploca_opg-->
+
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4 mb-2 text-center">
+    {% include 'includes/alerts.html' %}
+</div>
+
+
+
+{% endblock  %}

@@ -23,7 +23,7 @@ class KategorijeProizvoda(models.Model):
 
 class Proizvodi(models.Model):
     opg = models.ForeignKey(Opg, on_delete=models.CASCADE)
-    kategorija_proizvoda = models.ForeignKey(KategorijeProizvoda, on_delete=models.CASCADE)
+    kategorija_proizvoda = models.ForeignKey(KategorijeProizvoda, on_delete=models.CASCADE, related_name='proizvodi')
     naziv_proizvoda = models.CharField(max_length=50)
     slug = models.SlugField(max_length=100, unique=True)
     opis_proizvoda = models.TextField(max_length=300, blank=True)
