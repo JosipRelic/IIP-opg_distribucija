@@ -68,6 +68,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'korisnicki_racuni.context_processors.dohvati_opg',
                 'korisnicki_racuni.context_processors.dohvati_google_api',
+                'e_trznica.context_processors.dohvati_brojac_kosarice'
             ],
         },
     },

@@ -72,3 +72,34 @@ function onPlaceChanged(){
     }
 }	
 	
+
+
+$(document).ready(function(){
+    $('.dodaj_proizvod_u_kosaricu').on('click', function(e){
+        e.preventDefault();
+        
+        proizvod_id = $(this).attr('data-id');
+        url = $(this).attr('data-url');
+        
+        data = {
+            proizvod_id: proizvod_id,
+        }
+        $.ajax({
+            type: 'GET',
+            url: url,
+            data: data,
+            success: function(response){
+                console.log(response);
+                $('#prikaz_kolicine_proizvoda').html(response.brojac_kosarice['kolicina_proizvoda_u_kosarici']);
+                $('#kolicina-'+proizvod_id).html(response.kolicina);
+            }
+        })
+    })
+
+    $('.kolicina_proizvoda').each(function(){
+        var kolicina_id = $(this).attr('id');
+        var kolicina = $(this).attr('data-qty');
+        $('#'+kolicina_id).html(kolicina);
+    })
+
+});

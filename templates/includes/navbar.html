@@ -37,13 +37,25 @@
          
               </ul>
               <ul class="nav navbar-nav ms-auto w-100 justify-content-end">
+                
                 {% if user.is_authenticated %}
+                <a href="#" class="mt-1 me-3">
+                  <button type="button" class="btn btn-link position-relative border-0">
+                    <i class="bi bi-cart4 h5 me-1"></i>
+                    <span class="position-absolute top-50 start-100 translate-middle badge rounded-pill bg-danger" id="prikaz_kolicine_proizvoda">
+                        {{kolicina_proizvoda_u_kosarici}}
+                        <span class="visually-hidden">Proizvodi u košarici</span>
+                      </span>
+                  </button>
+                
+                </a>
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'mojRacun' %}">Moj račun</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link text-danger" href="{% url 'odjava' %}">Odjava</a>
                 </li>
+                
                 {% else %}
                   <li class="nav-item">
                       <a class="nav-link" href="{% url 'prijava' %}">Prijava</a>

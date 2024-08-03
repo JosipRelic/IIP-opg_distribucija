@@ -54,12 +54,18 @@
                                                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                                                 <img src="{{proizvod.slika_proizvoda.url}}" class="slike-proizvoda"></img>
                                                             </div>
-                                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
                                                                 <h6 class="card-title">{{proizvod.naziv_proizvoda}}</h6>
                                                                 <p class="card-text text-muted ">{{proizvod.opis_proizvoda}}</p>
                                                             </div>
-                                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                                                <span class="fw-bold">{{proizvod.cijena_proizvoda}} €<i class="bi bi-plus-square ms-3 text-success"></i></span>
+                                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                                <div class="row">
+                                                                        <span class="fw-bold">{{proizvod.cijena_proizvoda}} €
+                                                                            <a href="#" class="izbrisi_proizvod_iz_kosarice"><i class="bi bi-dash-square  ms-2 text-danger"></i></a>
+                                                                            <span id="kolicina-{{proizvod.id}}">0</span>
+                                                                            <a href="#" class="dodaj_proizvod_u_kosaricu" data-id="{{ proizvod.id }}" data-url="{% url 'dodaj_u_kosaricu' proizvod.id %}"><i class="bi bi-plus-square text-success"></i></a>
+                                                                        </span>      
+                                                                    </div>                                                                                                                                                                                                         
                                                             </div>           
                                                         </div>
                                                             
@@ -67,10 +73,17 @@
                                                         
                                                         {% endfor %}
                                                     </div>
+                                            
                                                 </div>
+                                             
                                             </div>
                                         {% endfor %}
-                            </div>                    
+                                        
+                                        {% for proizvod_u_kosarici in proizvodi_u_kosarici %}
+                                                <span class="kolicina_proizvoda d-none" id="kolicina-{{proizvod_u_kosarici.proizvod.id}}" data-qty="{{proizvod_u_kosarici.kolicina}}">{{proizvod_u_kosarici.kolicina}}</span>
+                                        {% endfor %}          
+                            </div>  
+                                   
             </div>
         </div>
     </div>

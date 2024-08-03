@@ -1,3 +1,7 @@
 from django.contrib import admin
+from e_trznica.models import Kosarica
 
-# Register your models here.
+class KosaricaAdmin(admin.ModelAdmin):
+    list_display = ('korisnik', 'proizvod', 'kolicina', 'izmijenjeno')
+
+admin.site.register(Kosarica, KosaricaAdmin)
