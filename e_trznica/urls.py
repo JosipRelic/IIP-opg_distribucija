@@ -6,4 +6,5 @@ urlpatterns = [
     path('<slug:opg_slug>/', views.pojedinosti_opga, name='pojedinosti_opga'),
 
     path('dodaj_u_kosaricu/<int:id_proizvoda>/', views.dodaj_u_kosaricu, name='dodaj_u_kosaricu'),
+    path('ukloni_iz_kosarice/<int:id_proizvoda>/', views.ukloni_iz_kosarice, name='ukloni_iz_kosarice'),
 ]

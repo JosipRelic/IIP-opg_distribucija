@@ -61,7 +61,7 @@
                                                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                                                                 <div class="row">
                                                                         <span class="fw-bold">{{proizvod.cijena_proizvoda}} €
-                                                                            <a href="#" class="izbrisi_proizvod_iz_kosarice"><i class="bi bi-dash-square  ms-2 text-danger"></i></a>
+                                                                            <a href="#" class="izbrisi_proizvod_iz_kosarice" data-id="{{ proizvod.id }}" data-url="{% url 'ukloni_iz_kosarice' proizvod.id %}"><i class="bi bi-dash-square  ms-2 text-danger"></i></a>
                                                                             <span id="kolicina-{{proizvod.id}}">0</span>
                                                                             <a href="#" class="dodaj_proizvod_u_kosaricu" data-id="{{ proizvod.id }}" data-url="{% url 'dodaj_u_kosaricu' proizvod.id %}"><i class="bi bi-plus-square text-success"></i></a>
                                                                         </span>      

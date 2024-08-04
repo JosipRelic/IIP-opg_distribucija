@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from e_trznica.context_processors import dohvati_brojac_kosarice
 from opg.models import Opg
@@ -77,6 +77,53 @@ def dodaj_u_kosaricu(request, id_proizvoda):
         
     else:
         return JsonResponse({
-            'status': 'Neuspješno',
+            'status': 'potrebna_prijava',
+            'poruka': 'Molimo Vas da se prijavite za nastavak.'
+        })
+
+
+def ukloni_iz_kosarice(request, id_proizvoda):
+    if request.user.is_authenticated:
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            #provjeravanje da li proizvod postoji
+            try:
+                proizvod = Proizvodi.objects.get(id=id_proizvoda)
+                #provjeravanje da li je taj proizvod već u košaricu
+                try:
+                    provjeraKosarice = Kosarica.objects.get(korisnik=request.user, proizvod=proizvod)
+                    
+                    if provjeraKosarice.kolicina > 1:
+                        # smanjivanje količine u košarici
+                        provjeraKosarice.kolicina -= 1
+                        provjeraKosarice.save()
+                    else:
+                        provjeraKosarice.delete()
+                        provjeraKosarice.kolicina = 0
+                    return JsonResponse({
+                        'status': 'Uspješno',
+                        'poruka': 'Količina proizvoda u košarici je umanjena.',
+                        'brojac_kosarice': dohvati_brojac_kosarice(request),
+                        'kolicina': provjeraKosarice.kolicina
+                    })
+                except:
+                    return JsonResponse({
+                        'status': 'Neuspješno',
+                        'poruka': 'Nemate ovaj proizvod u košarici',
+                    })
+
+            except:
+                return JsonResponse({
+                    'status': 'Neuspješno',
+                    'poruka': 'Ovaj proizvod nije na raspolaganju.'
+                 })
+        else:
+            return JsonResponse({
+                'status': 'Neuspješno',
+                'poruka': 'Nevažeći zahtjev.'
+            })
+        
+    else:
+        return JsonResponse({
+            'status': 'potrebna_prijava',
             'poruka': 'Molimo Vas da se prijavite za nastavak.'
         })
