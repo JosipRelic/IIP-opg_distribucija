@@ -103,9 +103,22 @@ $(document).ready(function(){
                 else{
                     $('#prikaz_kolicine_proizvoda').html(response.brojac_kosarice['kolicina_proizvoda_u_kosarici']);
                     $('#kolicina-'+proizvod_id).html(response.kolicina);
+
+                    //ukupna_cijena_proizvoda, pdv, ukupan_iznos
+                    primjeniIznosKosarice(
+                        response.iznos_kosarice['ukupna_cijena_proizvoda'],
+                        response.iznos_kosarice['pdv'],
+                        response.iznos_kosarice['ukupan_iznos']
+                    )
                 }              
             }
         })
+    })
+
+    $('.kolicina_proizvoda').each(function(){
+        var kolicina_id = $(this).attr('id');
+        var kolicina = $(this).attr('data-qty');
+        $('#'+kolicina_id).html(kolicina);
     })
 
     $('.izbrisi_proizvod_iz_kosarice').on('click', function(e){
@@ -113,6 +126,7 @@ $(document).ready(function(){
         
         proizvod_id = $(this).attr('data-id');
         url = $(this).attr('data-url');
+        id_kosarice = $(this).attr('id');
         
         $.ajax({
             type: 'GET',
@@ -135,16 +149,80 @@ $(document).ready(function(){
                 }else{
                     $('#prikaz_kolicine_proizvoda').html(response.brojac_kosarice['kolicina_proizvoda_u_kosarici']);
                     $('#kolicina-'+proizvod_id).html(response.kolicina);
+                    
+                    primjeniIznosKosarice(
+                        response.iznos_kosarice['ukupna_cijena_proizvoda'],
+                        response.iznos_kosarice['pdv'],
+                        response.iznos_kosarice['ukupan_iznos']
+                    )
+
+                    if(window.location.pathname=='/kosarica/'){
+                        ukloniProizvodIzKosarice(response.kolicina, id_kosarice);
+                        provjeraKolicineUnutarKosarice();
+                    }                 
                 }              
             }
         })
     })
 
+    //obrisi proizvod u potpunosti iz kosarice
+    $('.obrisi_kosaricu').on('click', function(e){
+        e.preventDefault();
+        
+        id_kosarice = $(this).attr('data-id');
+        url = $(this).attr('data-url');
+        
+        $.ajax({
+            type: 'GET',
+            url: url,       
+            success: function(response){
+                console.log(response);
+                if(response.status == 'Neuspješno'){
+                    Swal.fire({
+                        icon: "error",
+                        title: "Došlo je do pogreške...",
+                        text: response.poruka,
+                    });
+                }else{
+                    $('#prikaz_kolicine_proizvoda').html(response.brojac_kosarice['kolicina_proizvoda_u_kosarici']);
+                    Swal.fire({
+                        title: response.status,
+                        text: response.poruka,
+                        icon: "success"
+                      });
+                    
+                    primjeniIznosKosarice(
+                        response.iznos_kosarice['ukupna_cijena_proizvoda'],
+                        response.iznos_kosarice['pdv'],
+                        response.iznos_kosarice['ukupan_iznos']
+                    )  
 
-    $('.kolicina_proizvoda').each(function(){
-        var kolicina_id = $(this).attr('id');
-        var kolicina = $(this).attr('data-qty');
-        $('#'+kolicina_id).html(kolicina);
+                    ukloniProizvodIzKosarice(0, id_kosarice);
+                    provjeraKolicineUnutarKosarice();    
+
+                }              
+            }
+        })
     })
 
+    function ukloniProizvodIzKosarice(kolicina_proizvoda_u_kosarici, id_kosarice){        
+            if (kolicina_proizvoda_u_kosarici <= 0){
+                document.getElementById('proizvod_u_kosarici-'+id_kosarice).remove();
+            }
+    }
+
+    function provjeraKolicineUnutarKosarice(){
+        var brojacProizvoda = document.getElementById('prikaz_kolicine_proizvoda').innerHTML;
+        if (brojacProizvoda == 0){
+            document.getElementById('prazna_kosarica').style.display = "block";
+        }
+    }
+
+    function primjeniIznosKosarice(ukupna_cijena_proizvoda, pdv, ukupan_iznos){
+        if(window.location.pathname=='/kosarica/'){
+            $('#ukupna_cijena_proizvoda').html(ukupna_cijena_proizvoda);
+            $('#pdv').html(pdv);
+            $('#ukupan_iznos').html(ukupan_iznos);
+        }
+    }
 });

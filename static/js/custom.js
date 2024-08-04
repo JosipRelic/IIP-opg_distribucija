@@ -72,3 +72,79 @@ function onPlaceChanged(){
     }
 }	
 	
+
+
+$(document).ready(function(){
+    $('.dodaj_proizvod_u_kosaricu').on('click', function(e){
+        e.preventDefault();
+        
+        proizvod_id = $(this).attr('data-id');
+        url = $(this).attr('data-url');
+        
+        $.ajax({
+            type: 'GET',
+            url: url,
+            success: function(response){
+                console.log(response);
+                if(response.status == 'potrebna_prijava'){
+                    Swal.fire({
+                        icon: "info",
+                        title: "Niste prijavljeni...",
+                        text: response.poruka,
+                        footer: '<a href="/prijava/">PRIJAVI ME</a>'
+                    });
+                }else if(response.status == 'Neuspješno'){
+                    Swal.fire({
+                        icon: "error",
+                        title: "Došlo je do pogreške...",
+                        text: response.poruka,
+                    });
+                }             
+                else{
+                    $('#prikaz_kolicine_proizvoda').html(response.brojac_kosarice['kolicina_proizvoda_u_kosarici']);
+                    $('#kolicina-'+proizvod_id).html(response.kolicina);
+                }              
+            }
+        })
+    })
+
+    $('.izbrisi_proizvod_iz_kosarice').on('click', function(e){
+        e.preventDefault();
+        
+        proizvod_id = $(this).attr('data-id');
+        url = $(this).attr('data-url');
+        
+        $.ajax({
+            type: 'GET',
+            url: url,       
+            success: function(response){
+                console.log(response);
+                if(response.status == 'potrebna_prijava'){
+                    Swal.fire({
+                        icon: "info",
+                        title: "Niste prijavljeni...",
+                        text: response.poruka,
+                        footer: '<a href="/prijava/">PRIJAVI ME</a>'
+                    });
+                }else if(response.status == 'Neuspješno'){
+                    Swal.fire({
+                        icon: "error",
+                        title: "Došlo je do pogreške...",
+                        text: response.poruka,
+                    });
+                }else{
+                    $('#prikaz_kolicine_proizvoda').html(response.brojac_kosarice['kolicina_proizvoda_u_kosarici']);
+                    $('#kolicina-'+proizvod_id).html(response.kolicina);
+                }              
+            }
+        })
+    })
+
+
+    $('.kolicina_proizvoda').each(function(){
+        var kolicina_id = $(this).attr('id');
+        var kolicina = $(this).attr('data-qty');
+        $('#'+kolicina_id).html(kolicina);
+    })
+
+});

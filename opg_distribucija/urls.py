@@ -19,6 +19,7 @@ from django.urls import path, include
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
+from e_trznica import views as e_trznicaViews
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,5 +27,7 @@ urlpatterns = [
     path('', include('korisnicki_racuni.urls')),
 
     path('e_trznica/', include('e_trznica.urls')),
-    
+    path('kosarica/', e_trznicaViews.kosarica, name='kosarica'),
+
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
