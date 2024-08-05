@@ -6,6 +6,7 @@ from opg_ponuda.models import KategorijeProizvoda, Proizvodi
 from e_trznica.models import Kosarica
 from django.db.models import Prefetch
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 # Create your views here.
 def e_trznica(request):
@@ -163,3 +164,23 @@ def obrisi_kosaricu(request, id_kosarice):
                 'status': 'Neuspješno',
                 'poruka': 'Nevažeći zahtjev.'
             })
+
+
+def pretraga(request):
+    lokacija = request.GET['lokacija']
+    lat = request.GET['lat']
+    lng = request.GET['lng']
+    udaljenost = request.GET['udaljenost']
+    naziv_opga_proizvoda = request.GET['naziv_opga_proizvoda']
+
+    dohvati_opgove_po_proizvodima = Proizvodi.objects.filter(naziv_proizvoda__icontains=naziv_opga_proizvoda, proizvod_dostupan=True).values_list('opg', flat=True)
+    opgovi = Opg.objects.filter(Q(id__in=dohvati_opgove_po_proizvodima) | Q(naziv_opga__icontains=naziv_opga_proizvoda, opg_verificiran=True, korisnik__is_active=True))
+    
+    broj_opgova = opgovi.count()
+
+    context = {
+        'opgovi': opgovi,
+        'broj_opgova': broj_opgova
+    }
+   
+    return render(request, 'e_trznica/prikaz_opgova.html', context)

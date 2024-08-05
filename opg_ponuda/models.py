@@ -4,7 +4,7 @@ from opg.models import Opg
 # Create your models here.
 class KategorijeProizvoda(models.Model):
     opg = models.ForeignKey(Opg, on_delete=models.CASCADE)
-    naziv_kategorije = models.CharField(max_length=50, unique=True)
+    naziv_kategorije = models.CharField(max_length=50)
     slug = models.SlugField(max_length=100, unique=True)
     opis_kategorije = models.TextField(max_length=300, blank=True)
     kreirano = models.DateTimeField(auto_now_add=True)

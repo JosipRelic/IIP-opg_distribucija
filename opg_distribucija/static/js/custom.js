@@ -6,7 +6,7 @@ autocomplete = new google.maps.places.Autocomplete(
 		{
 			types: ['geocode', 'establishment'],
             //prikazuj adrese iz hrvatske
-			componentRestrictions: {'country': ['hr']},
+			componentRestrictions: {'country': ['hr','de']},
 		})
 
 //funkcija koja specificira sto ce se dogoditi kada se pritisne na predikciju(autocomplete)

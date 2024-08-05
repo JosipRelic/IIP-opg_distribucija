@@ -6,33 +6,42 @@
     <main>
       <div class="container-fluid">
         <div class="row" style="background: url({% static 'images/naslovna.jpg' %}) no-repeat center / cover;">
-          <div class="col">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div id="trazilice">
-                <form class="row gy-2 gx-3 align-items-center" style="justify-content:center;">
-                  <h2>PRETRAŽITE DOSTUPNE OPG-OVE PREMA KRITERIJIMA</h2>
-                  <p>"Domaće uzgojena hrana - spoj ljubavi prema zemlji, prirodi i zdravlju koja nas hrani iznutra i čuva naše korijene."</p> 
-                  <div class="col-auto">
-                    <input type="text" class="form-control" placeholder="Naziv opg-a / proizvoda">
+                <form class="row" action="{% url "pretraga" %}" method="GET">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h2>PRETRAŽITE DOSTUPNE OPG-OVE PREMA KRITERIJIMA</h2>
                   </div>
-                  <div class="col-auto">
-                    <div class="input-group">
-                      <div class="input-group-text"><i class="bi bi-geo-alt"></i></div>
-                      <input type="text" class="form-control" placeholder="Pretraži lokacije">
-                    </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <p>"Domaće uzgojena hrana - spoj ljubavi prema zemlji, prirodi i zdravlju koja nas hrani iznutra i čuva naše korijene."</p> 
                   </div>
-                  <div class="col-auto">
-                    <select class="form-select" id="autoSizingSelect">
-                      <option selected>Udaljenost</option>
-                      <option value="1">10km</option>
-                      <option value="2">20km</option>
-                      <option value="3">30km</option>
-                      <option value="4">40km</option>
-                      <option value="5">50km</option>
-                    </select>
-                  </div>
-                  <div class="col-auto">
-                    <button type="submit" class="btn btn-primary">Pretraži</button>
-                  </div>
+                  <div class="row">
+                          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 mt-1">
+                            <input type="text" class="form-control" placeholder="Naziv opg-a/proizvoda" name="naziv_opga_proizvoda">
+                          </div>
+                          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 mt-1">
+                            <div class="input-group">
+                              <div class="input-group-text"><i class="bi bi-geo-alt"></i></div>
+                              <input type="text" class="form-control" required placeholder="Pretraži po lokaciji" id="id_adresa" name="lokacija">
+                              <input type="hidden" name="lat" value="" id="id_latituda"></input>
+                              <input type="hidden" name="lng" value="" id="id_longituda"></input>
+                            </div>
+                          </div>
+                          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 mt-2">
+                            <select name="udaljenost" class="form-select" id="udaljenost" required>
+                              <option selected>Udaljenost</option>
+                              <option value="5"> 5 km</option>
+                              <option value="10">10 km</option>
+                              <option value="15">15 km</option>
+                              <option value="30">30 km</option>
+                              <option value="60">60 km</option>
+                              <option value="120">120 km</option>
+                              <option value="240">240 km</option>
+                            </select>
+                          </div>
+                          <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12 mt-2">
+                            <button type="submit" class="btn btn-primary">Pretraži</button>
+                          </div>
                 </form>
               </div>         
           </div>

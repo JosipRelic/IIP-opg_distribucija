@@ -84,8 +84,9 @@ def dodaj_kategoriju(request):
             naziv_kategorije = forma_kategorije.cleaned_data['naziv_kategorije']
             kategorija = forma_kategorije.save(commit=False)
             kategorija.opg = dohvati_opg(request)
-            kategorija.slug = slugify(naziv_kategorije)
-            forma_kategorije.save()
+            kategorija.save()
+            kategorija.slug = slugify(naziv_kategorije)+'-'+str(kategorija.id)
+            kategorija.save()
             messages.success(request, 'Nova kategorija kreirana.')
             return redirect('kreiranje_ponude')
         else:
@@ -109,8 +110,9 @@ def uredi_kategoriju(request, pk=None):
             naziv_kategorije = forma_kategorije.cleaned_data['naziv_kategorije']
             kategorije = forma_kategorije.save(commit=False)
             kategorije.opg = dohvati_opg(request)
-            kategorije.slug = slugify(naziv_kategorije)
-            forma_kategorije.save()
+            kategorije.save()
+            kategorije.slug = slugify(naziv_kategorije)+'-'+str(kategorije.id)
+            kategorije.save()
             messages.success(request, 'Kategorija uspješno ažurirana.')
             return redirect('kreiranje_ponude')
         else:
@@ -143,8 +145,9 @@ def dodaj_proizvod(request):
             naziv_proizvoda = forma_proizvodi.cleaned_data['naziv_proizvoda']
             proizvod = forma_proizvodi.save(commit=False)
             proizvod.opg = dohvati_opg(request)
-            proizvod.slug = slugify(naziv_proizvoda)
-            forma_proizvodi.save()
+            proizvod.save()
+            proizvod.slug = slugify(naziv_proizvoda)+'-'+str(proizvod.id)
+            proizvod.save()
             messages.success(request, 'Novi proizvod kreiran.')
             return redirect('proizvodi_po_kategoriji', proizvod.kategorija_proizvoda.pk)
         else:
@@ -170,8 +173,9 @@ def uredi_proizvod(request, pk=None):
             naziv_proizvoda = forma_proizvodi.cleaned_data['naziv_proizvoda']
             proizvodi = forma_proizvodi.save(commit=False)
             proizvodi.opg = dohvati_opg(request)
-            proizvodi.slug = slugify(naziv_proizvoda)
-            forma_proizvodi.save()
+            proizvodi.save()
+            proizvodi.slug = slugify(naziv_proizvoda)+'-'+str(proizvodi.id)
+            proizvodi.save()
             messages.success(request, 'Proizvod je uspješno ažuriran.')
             return redirect('proizvodi_po_kategoriji', proizvodi.kategorija_proizvoda.pk)
         else:
