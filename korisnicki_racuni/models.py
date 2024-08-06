@@ -1,6 +1,7 @@
 from django.db import models 
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-
+from django.contrib.gis.db import models as gismodels
+from django.contrib.gis.geos import Point
 
 class UserManager(BaseUserManager):
     def create_user(self, first_name, last_name, username, email, password=None):
@@ -96,6 +97,7 @@ class KorisnickiProfil(models.Model):
     postanski_broj = models.CharField(max_length=8, blank=True, null=True)
     latituda = models.CharField(max_length=50, blank=True, null=True)
     longituda = models.CharField(max_length=50, blank=True, null=True)
+    lokacija = gismodels.PointField(blank=True, null=True, srid=4326)
     kreirano = models.DateTimeField(auto_now_add=True)
     izmijenjeno = models.DateTimeField(auto_now=True)
 
@@ -105,6 +107,12 @@ class KorisnickiProfil(models.Model):
     class Meta:
         verbose_name = 'korisnicki profil'
         verbose_name_plural = 'korisnicki profili'
+
+    def save(self, *args, **kwargs):
+        if self.latituda and self.longituda:
+            self.lokacija = Point(float(self.longituda), float(self.latituda))
+            return super(KorisnickiProfil, self).save(*args, **kwargs)
+        return super(KorisnickiProfil, self).save(*args, **kwargs)
 
 
 

@@ -18,3 +18,10 @@
 .najbolji_opgovi{
     max-width: 150px; max-height:150px; overflow: hidden;
 }
+
+
+#slika_prikaz_opgova {
+    height: 170px;
+    width: 100%;
+    object-fit: cover; 
+}

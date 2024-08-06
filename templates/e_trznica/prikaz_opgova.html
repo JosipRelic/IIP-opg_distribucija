@@ -14,21 +14,26 @@
                                         <div class="row">
                                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                                     {% if opg.korisnicki_profil.slika_profila %}
-                                                        <img src="{{opg.korisnicki_profil.slika_profila.url}}" class="img-fluid rounded-start" alt="slika_profila">
+                                                        <img src="{{opg.korisnicki_profil.slika_profila.url}}" class="img-thumbnail rounded-start" id="slika_prikaz_opgova" alt="slika_profila">
                                                     {% else %}
-                                                        <img src="{% static "images/default-profile.jpg" %}" class="img-fluid rounded-start" alt="slika_profila">
+                                                        <img src="{% static "images/default-profile.jpg" %}" class="img-fluid rounded-start" id="slika_prikaz_opgova" alt="slika_profila">
                                                     {% endif %}
-                                                    
+
                                                 </div>
                                                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                                     <div class="card-body">
                                                     <h5 class="card-title">{{opg.naziv_opga}}</h5>
                                                     {% if opg.korisnicki_profil.adresa %}
-                                                        <p class="card-text"><small class="text-muted">{{opg.korisnicki_profil.adresa}}</small></p>
+                                                        <p class="card-text mb-0"><small class="text-muted">{{opg.korisnicki_profil.adresa}}</small></p>
                                                     {% else %}
                                                         <p class="card-text"><small class="text-muted d-none">{{opg.korisnicki_profil.adresa}}</small></p>
                                                     {% endif %}
-                                                    <a href="{% url "pojedinosti_opga" opg.opg_slug %}"><button type="button" class="btn btn-primary">Pogledaj ponudu</button></a>
+
+                                                    {% if trenutna_lokacija %}
+                                                        <span class="card-text"><small class="text-muted"><strong>{{opg.udaljenost_km}} km </strong>udaljen od {{trenutna_lokacija}}</small></span>
+                                                    {% endif %}
+                                                   
+                                                    <a href="{% url "pojedinosti_opga" opg.opg_slug %}"><button type="button" class="btn btn-primary d-block mt-3">Pogledaj ponudu</button></a>
                                                     </div>
                                                 </div>
                                         </div>

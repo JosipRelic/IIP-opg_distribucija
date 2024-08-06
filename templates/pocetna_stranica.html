@@ -29,12 +29,14 @@
                           </div>
                           <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 mt-2">
                             <select name="udaljenost" class="form-select" id="udaljenost" required>
-                              <option selected>Udaljenost</option>
-                              <option value="5"> 5 km</option>
+                              <option selected value="5"> 5 km</option>
                               <option value="10">10 km</option>
                               <option value="15">15 km</option>
+                              <option value="20">20 km</option>
                               <option value="30">30 km</option>
+                              <option value="40">40 km</option>
                               <option value="60">60 km</option>
+                              <option value="80">80 km</option>
                               <option value="120">120 km</option>
                               <option value="240">240 km</option>
                             </select>
@@ -62,9 +64,9 @@
                   <li class="ps-3">
                     <div class="najbolji_opgovi"> 
                       {% if opg.korisnicki_profil.slika_profila %}
-                           <a href=""><img src="{{opg.korisnicki_profil.slika_profila.url}}" class="img-fluid" alt="opg_slika_profila"></a> 
+                           <a href=""><img src="{{opg.korisnicki_profil.slika_profila.url}}"  alt="opg_slika_profila" id="slika_prikaz_opgova"></a> 
                       {% else %}
-                          <a href=""><img src="{% static "images/default-profile.jpg" %}" class="img-fluid" alt="opg_slika_profila"></a> 
+                          <a href=""><img src="{% static "images/default-profile.jpg" %}"  alt="opg_slika_profila" id="slika_prikaz_opgova"></a> 
                       {% endif %}
                     </div>
                   </li>
@@ -89,9 +91,9 @@
                           <div class="row g-0">
                             <div class="col-md-4">
                               {% if opg.korisnicki_profil.slika_profila %}
-                                  <img src="{{opg.korisnicki_profil.slika_profila.url}}" class="img-fluid rounded-start" alt="opg_slika_profila">
+                                  <img src="{{opg.korisnicki_profil.slika_profila.url}}" id="slika_prikaz_opgova" class="img-thumbnail rounded-start" alt="opg_slika_profila">
                               {% else %}
-                                  <img src="{% static "images/default-profile.jpg" %}" class="img-fluid rounded-start" alt="opg_slika_profila">
+                                  <img src="{% static "images/default-profile.jpg" %}" id="slika_prikaz_opgova" class="img-thumbnail rounded-start" alt="opg_slika_profila">
                               {% endif %}
                             </div>
                             <div class="col-md-8">
