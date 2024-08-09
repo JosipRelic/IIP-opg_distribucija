@@ -183,7 +183,7 @@ def pretraga(request):
         opgovi = Opg.objects.filter(Q(id__in=dohvati_opgove_po_proizvodima) | Q(naziv_opga__icontains=naziv_opga_proizvoda, opg_verificiran=True, korisnik__is_active=True))
         
         if lat and lng and udaljenost:
-            pnt = GEOSGeometry("POINT({0} {1})".format(lng, lat))
+            pnt = GEOSGeometry("POINT(%s %s)" % (lng, lat))
             opgovi = Opg.objects.filter(Q(id__in=dohvati_opgove_po_proizvodima) | Q(naziv_opga__icontains=naziv_opga_proizvoda, opg_verificiran=True, korisnik__is_active=True), 
                                         korisnicki_profil__lokacija__distance_lte=(pnt, D(km=udaljenost))
                                         ).annotate(distance=Distance("korisnicki_profil__lokacija", pnt)).order_by("distance")

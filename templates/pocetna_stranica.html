@@ -64,9 +64,9 @@
                   <li class="ps-3">
                     <div class="najbolji_opgovi"> 
                       {% if opg.korisnicki_profil.slika_profila %}
-                           <a href=""><img src="{{opg.korisnicki_profil.slika_profila.url}}"  alt="opg_slika_profila" id="slika_prikaz_opgova"></a> 
+                           <a href="{% url "pojedinosti_opga" opg.opg_slug %}"><img src="{{opg.korisnicki_profil.slika_profila.url}}"  alt="opg_slika_profila" id="slika_prikaz_opgova"></a> 
                       {% else %}
-                          <a href=""><img src="{% static "images/default-profile.jpg" %}"  alt="opg_slika_profila" id="slika_prikaz_opgova"></a> 
+                          <a href="{% url "pojedinosti_opga" opg.opg_slug %}"><img src="{% static "images/default-profile.jpg" %}"  alt="opg_slika_profila" id="slika_prikaz_opgova"></a> 
                       {% endif %}
                     </div>
                   </li>
@@ -91,20 +91,22 @@
                           <div class="row g-0">
                             <div class="col-md-4">
                               {% if opg.korisnicki_profil.slika_profila %}
-                                  <img src="{{opg.korisnicki_profil.slika_profila.url}}" id="slika_prikaz_opgova" class="img-thumbnail rounded-start" alt="opg_slika_profila">
+                                  <a href="{% url "pojedinosti_opga" opg.opg_slug %}"><img src="{{opg.korisnicki_profil.slika_profila.url}}" id="slika_prikaz_opgova" class="img-thumbnail rounded-start" alt="opg_slika_profila"></a>
                               {% else %}
-                                  <img src="{% static "images/default-profile.jpg" %}" id="slika_prikaz_opgova" class="img-thumbnail rounded-start" alt="opg_slika_profila">
+                                <a href="{% url "pojedinosti_opga" opg.opg_slug %}"><img src="{% static "images/default-profile.jpg" %}" id="slika_prikaz_opgova" class="img-thumbnail rounded-start" alt="opg_slika_profila"></a>
                               {% endif %}
                             </div>
                             <div class="col-md-8">
                               <div class="card-body text-start">
-                                <h5 class="card-title">{{opg.naziv_opga}}</h5>
+                                <a href="{% url "pojedinosti_opga" opg.opg_slug %}" class="text-decoration-none"><h5 class="card-title">{{opg.naziv_opga}}</h5></a>
                                 {% if opg.korisnicki_profil.adresa %}
                                     <p class="card-text">{{opg.korisnicki_profil.adresa}}</p>
                                 {% else %}
                                     <p class="card-text d-none">{{opg.korisnicki_profil.adresa}}</p>
                                 {% endif %}
-                                <p class="card-text"><small class="text-body-secondary">30 km udaljenost</small></p>
+                                {% if opg.udaljenost_km %}
+                                  <p class="card-text"><small class="text-body-secondary">{{opg.udaljenost_km}} km udaljenosti</small></p>
+                                {% endif %}
                               </div>
                             </div>
                           </div>

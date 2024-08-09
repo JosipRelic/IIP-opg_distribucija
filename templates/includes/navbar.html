@@ -15,7 +15,7 @@
                   <li class="ms-1 me-1">
                   {% comment %} <li class="nav-item active me-2 ">
                     <div class="input-group me-auto mb-2 mb-lg-0 w-auto"> {% endcomment %}
-                      <button class="btn btn-outline-danger w-100 mb-1 mt-1 ms-1 me-1" type="button"><i class="bi bi-geo me-1"></i>MOJA LOKACIJA</button>
+                      <button id="moja_lokacija" class="btn btn-outline-danger w-100 mb-1 mt-1 ms-1 me-1" onclick="getLocation()" type="button"><i class="bi bi-geo me-1"></i>MOJA LOKACIJA</button>
                       {% comment %} <input type="text" class="form-control" value="" placeholder="Vaša trenutna lokacija" disabled>
                     </div> {% endcomment %}
                   </li> 
@@ -71,3 +71,42 @@
 
   
   </header>  
+
+
+<script>
+    const x = document.getElementById("moja_lokacija");
+    var trenutna_lokacija = sessionStorage.getItem("trenutna_lokacija");
+    if (trenutna_lokacija != null && trenutna_lokacija != ""){
+      x.innerHTML = trenutna_lokacija;
+    }
+    
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+      }
+    }
+    
+    function showPosition(position) {
+      var lat = position.coords.latitude;
+      var lng = position.coords.longitude;
+
+      //ajax request prema google maps apiu za dohvacanje podataka na osnovu lat i lng
+      var GOOGLE_API_KEY = "{{ GOOGLE_API_KEY }}";
+      var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"+&key="+GOOGLE_API_KEY;
+      
+      $.ajax({
+        url: url,
+        type: "GET",
+        success: function(response){
+          var trenutna_lokacija = (response.results[0].formatted_address);
+          x.innerHTML = trenutna_lokacija;
+          sessionStorage.setItem("trenutna_lokacija", trenutna_lokacija);
+          window.location = '?lat='+lat+'&lng='+lng;           
+        }
+      })
+
+    }
+</script>
