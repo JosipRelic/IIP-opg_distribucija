@@ -4,15 +4,7 @@
 {% block sadrzaj %}
 
 <div class="nadzorna_ploca">
-    <div class="jumbotron d-flex align-items-center mb-4" style="background: url({% static 'images/opg_naslovna.jpg' %}) no-repeat center center; background-size: cover; color: white; padding: 4rem 2rem; border-radius: 0; margin-top: 0;">
-        <div class="container d-flex align-items-center">
-            <img src="{% static 'images/opg_profilna.jpg' %}" alt="slika_profila" class="slika-profila me-3">
-            <div class="text-container">
-                <h1 class="mb-1">KUPAC</h1>
-                <p class="mb-0"><i class="bi bi-envelope me-1"></i>2josip.relic@gmail.com</p>
-            </div>
-        </div>
-    </div>
+        {% include "kupac/naslovna.html" %}
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">

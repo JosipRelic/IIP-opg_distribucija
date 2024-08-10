@@ -21,4 +21,5 @@ urlpatterns = [
     path('resetiraj_lozinku/', views.resetiraj_lozinku, name='resetiraj_lozinku'),
 
     path('opg/', include('opg.urls')),
+    path('kupac/', include('kupac.urls')),
 ]

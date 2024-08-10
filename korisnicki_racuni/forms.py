@@ -41,3 +41,8 @@ class KorisnickiProfilForma(forms.ModelForm):
         for field in self.fields:
             if field == 'latituda' or field == 'longituda':
                 self.fields[field].widget.attrs['readonly'] = 'readonly'
+
+class FormaInfoKorisnik(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'phone_number']

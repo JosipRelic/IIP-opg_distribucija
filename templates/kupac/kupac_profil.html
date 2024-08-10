@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sadrzaj %}
+
+<div class="nadzorna_ploca">
+        {% include "kupac/naslovna.html" %}
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <!--Ucitavanje izbornika OPG-->
+                    {% include 'includes/kupac_izbornik.html' %}
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                            <div class="container mt-3">
+                                <div class="row">
+                                        <h4>POSTAVKE PROFILA</h4>
+                                        <form action = "{% url "kupac_profil" %}" method = "POST" enctype="multipart/form-data">
+                                          {% csrf_token %}
+                                          <div class="row">
+                      
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4 mt-3">
+                                                <div class="row">
+                                                    <div class="text-center col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                                      <img src="{% if profil.naslovna_slika %} {{profil.naslovna_slika.url}} {% else %} {% static "images/default-cover.jpg" %} {% endif %}" class="rounded opg-profil-slike" alt="naslovna_slika">
+                                                    </div>
+                                                    <div class="form-group col-lg-9 col-md-8 col-sm-8 col-xs-12">
+                                                      <label for="naslovnaSlika" class="form-label">Naslovna slika</label>
+                                                      {{profil_forma.naslovna_slika}}
+                                                          <div class="form-group col-lg-9 col-md-8 col-sm-8 col-xs-12">
+                                                            <label class="text-danger mt-2">{{profil_forma.naslovna_slika.errors}}</label>
+                                                          </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                      
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                                                <div class="row">
+                                                  <div class="text-center col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                                    <img src="{% if profil.slika_profila %} {{profil.slika_profila.url}} {% else %} {% static "images/default-profile.jpg" %} {% endif %}" class="rounded opg-profil-slike" alt="slika_profila">
+                                                  </div>
+                                                    <div class="form-group col-lg-9 col-md-8 col-sm-8 col-xs-12">
+                                                        <label for="slikaProfila">Slika profila</label>
+                                                        {{profil_forma.slika_profila}}
+                                                            <div class="form-group col-lg-9 col-md-8 col-sm-8 col-xs-12">
+                                                              <label class="text-danger mt-2">{{profil_forma.slika_profila.errors}}</label>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>    
+                      
+                                          
+                                            <hr>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-2">     
+                                              <div class="form-group">
+                                                <label for="ime">Promijeni Ime</label>
+                                                {{forma_info_korisnik.first_name}}
+                                              </div>
+                                            </div>  
+
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-2">     
+                                              <div class="form-group">
+                                                <label for="prezime">Promijeni Prezime</label>
+                                                {{forma_info_korisnik.last_name}}
+                                              </div>
+                                            </div> 
+
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">     
+                                              <div class="form-group">
+                                                <label for="broj_telefona">Promijeni Broj telefona</label>
+                                                {{forma_info_korisnik.phone_number}}
+                                              </div>
+                                            </div> 
+                      
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">     
+                                                <div class="form-group">
+                                                  <label for="adresa">Promijeni adresu</label>
+                                                  {{profil_forma.adresa}}
+                                                </div>
+                                            </div>    
+                      
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-2">     
+                                                <div class="form-group">
+                                                  <label for="drzava">Promijeni državu</label>
+                                                  {{profil_forma.drzava}}
+                                                </div>
+                                            </div>   
+                      
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-2">      
+                                                <div class="form-group">
+                                                  <label for="zupanija">Promijeni županiju</label>
+                                                  {{profil_forma.zupanija}}
+                                                </div>
+                                            </div>
+                      
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-2">
+                                                <div class="form-group">
+                                                  <label for="grad">Promijeni grad</label>
+                                                  {{profil_forma.grad}}
+                                                </div>
+                                            </div>
+                      
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-2">
+                                                <div class="form-group">
+                                                  <label for="postanski_broj">Promijeni poštanski broj</label>
+                                                  {{profil_forma.postanski_broj}}
+                                                </div>
+                                            </div>
+                      
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-2">
+                                                <div class="form-group">
+                                                  <label for="latituda">Promijeni latitudu</label>
+                                                  {{profil_forma.latituda}}
+                                                </div>
+                                            </div>
+                      
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-2">
+                                                <div class="form-group">
+                                                  <label for="longituda">Promijeni longitudu</label>
+                                                  {{profil_forma.longituda}}
+                                                </div>
+                                            </div>
+                      
+                                          </div>
+                                            <button type="submit" class="btn btn-primary mt-3"><i class="bi bi-toggles2 pe-1"></i>Ažuriraj podatke</button>
+                                        </form>
+                                                                                     
+                                </div>                 
+                            </div>                    
+            </div>
+        </div>
+    </div>
+
+   
+</div> <!--nadzorna_ploca_opg-->
+
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4 mb-2 text-center">
+    {% include 'includes/alerts.html' %}
+</div>
+
+{% endblock sadrzaj %}

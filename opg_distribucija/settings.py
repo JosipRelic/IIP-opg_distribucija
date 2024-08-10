@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'opg_ponuda',
     'e_trznica',
     'django.contrib.gis',
+    'kupac',
 ]
  
 MIDDLEWARE = [
