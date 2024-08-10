@@ -107,7 +107,7 @@ $(document).ready(function(){
                     //ukupna_cijena_proizvoda, pdv, ukupan_iznos
                     primjeniIznosKosarice(
                         response.iznos_kosarice['ukupna_cijena_proizvoda'],
-                        response.iznos_kosarice['pdv'],
+                        response.iznos_kosarice['pdv_dict'],
                         response.iznos_kosarice['ukupan_iznos']
                     )
                 }              
@@ -152,7 +152,7 @@ $(document).ready(function(){
                     
                     primjeniIznosKosarice(
                         response.iznos_kosarice['ukupna_cijena_proizvoda'],
-                        response.iznos_kosarice['pdv'],
+                        response.iznos_kosarice['pdv_dict'],
                         response.iznos_kosarice['ukupan_iznos']
                     )
 
@@ -193,7 +193,7 @@ $(document).ready(function(){
                     
                     primjeniIznosKosarice(
                         response.iznos_kosarice['ukupna_cijena_proizvoda'],
-                        response.iznos_kosarice['pdv'],
+                        response.iznos_kosarice['pdv_dict'],
                         response.iznos_kosarice['ukupan_iznos']
                     )  
 
@@ -218,11 +218,18 @@ $(document).ready(function(){
         }
     }
 
-    function primjeniIznosKosarice(ukupna_cijena_proizvoda, pdv, ukupan_iznos){
+    function primjeniIznosKosarice(ukupna_cijena_proizvoda, pdv_dict, ukupan_iznos){
         if(window.location.pathname=='/kosarica/'){
             $('#ukupna_cijena_proizvoda').html(ukupna_cijena_proizvoda);
-            $('#pdv').html(pdv);
             $('#ukupan_iznos').html(ukupan_iznos);
+            
+            console.log(pdv_dict);
+            for(key1 in pdv_dict){
+                console.log(pdv_dict[key1]);
+                for(key2 in pdv_dict[key1]){
+                    $("#pdv-"+key1).html(pdv_dict[key1][key2]);
+                }
+            }
         }
     }
 });
