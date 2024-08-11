@@ -1,6 +1,8 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from e_trznica.context_processors import dohvati_brojac_kosarice, dohvati_iznose_u_kosarici
+from korisnicki_racuni.models import KorisnickiProfil
+from narudzbe.forms import FormaNarudzbe
 from opg.models import Opg
 from opg_ponuda.models import KategorijeProizvoda, Proizvodi
 from e_trznica.models import Kosarica
@@ -200,3 +202,31 @@ def pretraga(request):
         }
     
         return render(request, 'e_trznica/prikaz_opgova.html', context)
+    
+@login_required(login_url='prijava')
+def pregled_narudzbe(request):
+    proizvodi_u_kosarici = Kosarica.objects.filter(korisnik=request.user).order_by('kreirano')
+    broj_proizvoda_u_kosarici = proizvodi_u_kosarici.count()
+    if broj_proizvoda_u_kosarici <= 0:
+        return redirect('e_trznica')
+    
+    korisnicki_profil = KorisnickiProfil.objects.get(korisnik=request.user)
+    zadane_vrijednosti = {
+        'ime': request.user.first_name,
+        'prezime': request.user.last_name,
+        'broj_telefona': request.user.phone_number,
+        'email': request.user.email,
+        'adresa': korisnicki_profil.adresa,
+        'drzava': korisnicki_profil.drzava,
+        'zupanija': korisnicki_profil.zupanija,
+        'grad': korisnicki_profil.grad,
+        'postanski_broj': korisnicki_profil.postanski_broj,
+    }
+    
+    forma_narudzbe = FormaNarudzbe(initial=zadane_vrijednosti)
+    
+    context = {
+        'forma_narudzbe': forma_narudzbe,
+        'proizvodi_u_kosarici': proizvodi_u_kosarici,
+    }
+    return render(request, 'e_trznica/pregled_narudzbe.html', context)

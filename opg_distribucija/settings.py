@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'e_trznica',
     'django.contrib.gis',
     'kupac',
+    'narudzbe',
 ]
  
 MIDDLEWARE = [

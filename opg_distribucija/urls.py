@@ -29,7 +29,9 @@ urlpatterns = [
     path('e_trznica/', include('e_trznica.urls')),
     path('kosarica/', e_trznicaViews.kosarica, name='kosarica'),
 
-    path('pretraga/', e_trznicaViews.pretraga, name='pretraga')
+    path('pretraga/', e_trznicaViews.pretraga, name='pretraga'),
+
+    path('pregled_narudzbe/', e_trznicaViews.pregled_narudzbe, name='pregled_narudzbe'),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
