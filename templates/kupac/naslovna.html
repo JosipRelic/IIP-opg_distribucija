@@ -1,10 +1,10 @@
 {% load static %}
-<div class="jumbotron d-flex align-items-center mb-4" style="background: url({% static 'images/opg_naslovna.jpg' %}) no-repeat center center; background-size: cover; color: white; padding: 4rem 2rem; border-radius: 0; margin-top: 0;">
+<div class="jumbotron d-flex align-items-center mb-4" style="background: url({% if korisnicki_profil.naslovna_slika %}{{korisnicki_profil.naslovna_slika.url}}{% else %}{% static "images/default-cover.jpg" %} {% endif %}) no-repeat center center; background-size: cover; color: white; padding: 4rem 2rem; border-radius: 0; margin-top: 0;">
     <div class="container d-flex align-items-center">
-        <img src="{% static 'images/opg_profilna.jpg' %}" alt="slika_profila" class="slika-profila me-3">
+        <img src="{% if korisnicki_profil.slika_profila %} {{korisnicki_profil.slika_profila.url}} {% else %} {% static "images/default-profile.jpg" %} {% endif %}" alt="slika_profila" class="slika-profila me-3">
         <div class="text-container">
-            <h1 class="mb-1">KUPAC</h1>
-            <p class="mb-0"><i class="bi bi-envelope me-1"></i>2josip.relic@gmail.com</p>
+            <h1 class="mb-1">{{user.first_name}} {{user.last_name}}</h1>
+            <p class="mb-0"><i class="bi bi-phone me-1"></i>{{user.phone_number}}</p>
         </div>
     </div>
 </div>
