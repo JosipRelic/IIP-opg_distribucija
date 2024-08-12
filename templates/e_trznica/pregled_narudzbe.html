@@ -91,7 +91,6 @@
                         <div class="card-header py-3">
                           <h5 class="mb-0">Naručit ćete</h5>
                         </div>
-                        {% if proizvodi_u_kosarici %}
                                  {% for proizvod_u_kosarici in proizvodi_u_kosarici %} 
                                         <div class="card rounded-0 border-0" id="proizvod_u_kosarici-{{proizvod_u_kosarici.id}}">                                           
                                                     <div class="card-body">                                                        
@@ -117,7 +116,7 @@
                                            
                                         </div>
                                     {% endfor %}
-                        {% endif %}
+                  
                         <div class="card-body">
                           <ul class="list-group list-group-flush">
                             <li
@@ -157,9 +156,19 @@
                             </strong>                            
                             </li>
                           </ul>
-                          <div class="text-center">
+
+                          <h6>Odaberite način plaćanja:</h6>
+                          <div>
+                            <label>
+                              <i class="bi bi-paypal text-primary">ayPal</i>
+                               <input type="radio" name="nacin_placanja" value="PayPal">
+                            </label>  
+                          </div>
+
+                         <span class="text-danger" id="nacin_placanja_error"></span>
+                          <div class="text-center mt-4">
                                 <a href="#">
-                                  <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                  <button onclick="return potvrdaNacinaPlacanja();" type="submit" class="btn btn-primary btn-lg btn-block">
                                       Naruči
                                   </button>
                                 </a>
@@ -176,6 +185,27 @@
 
     </div>
 </div>     
+
+<script>
+  function potvrdaNacinaPlacanja(){
+    var nacin_placanja = $("input[name='nacin_placanja']:checked").val()
+    if(!nacin_placanja){
+      $('#nacin_placanja_error').html("Morate odabrati način plaćanja!");
+      return false;
+    }else{
+      var potvrda = confirm('Odabrali ste ' + nacin_placanja +' kao način plaćanja.\nPritisnite OK za nastavak.');
+      if(potvrda == true){
+         return true;
+      }else{
+        return false;
+      }
+    }
+  }
+
+  $('input[name=nacin_placanja]').on('change', function(){
+     $('#nacin_placanja_error').html("");
+  })
+</script>
 
 {% endblock %}
 
