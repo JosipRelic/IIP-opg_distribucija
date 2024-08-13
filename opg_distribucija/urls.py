@@ -33,5 +33,7 @@ urlpatterns = [
 
     path('pregled_narudzbe/', e_trznicaViews.pregled_narudzbe, name='pregled_narudzbe'),
 
+    path('narudzbe/', include('narudzbe.urls')),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

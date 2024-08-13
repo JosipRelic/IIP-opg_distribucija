@@ -3,5 +3,6 @@ Django==5.0.3
 GDAL @ file:///C:/Josip/IIP-opg_distribucija/GDAL-3.8.4-cp311-cp311-win_amd64.whl#sha256=13115dae539ab85b7b4b5bf8b7eb13abf2026d95313cec0837bff034a8c25c58
 pillow==10.2.0
 psycopg2==2.9.9
+simplejson==3.19.2
 sqlparse==0.4.4
 tzdata==2024.1

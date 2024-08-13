@@ -9,7 +9,7 @@
                 <h4 class="ms-3"><i class="bi bi-person-vcard me-2"></i>Podaci o plaćanju</h4>
 
                     <div class="container mt-3 mb-5"> 
-                           <form action="#" method="POST">
+                           <form action="{% url "posalji_narudzbu" %}" method="POST">
                                 {% csrf_token %}
                                 <div class="row">
                       

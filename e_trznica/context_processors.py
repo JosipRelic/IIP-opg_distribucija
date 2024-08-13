@@ -35,7 +35,6 @@ def dohvati_iznose_u_kosarici(request):
             pdv_dict.update({vrsta_poreza : {str(postotak_poreza) : iznos_poreza}})
             
         #PDV {'PDV': {'25.00':'0.65'}}
-        pdv = 0
         pdv = sum(x for key in pdv_dict.values() for x in key.values())
 
         ukupan_iznos = ukupna_cijena_proizvoda + pdv
