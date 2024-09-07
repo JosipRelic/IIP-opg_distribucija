@@ -1,9 +1,10 @@
+from django.http import HttpResponse
 import simplejson as json
 from django.shortcuts import render, redirect
 from e_trznica.models import Kosarica
 from e_trznica.context_processors import dohvati_iznose_u_kosarici
 from .forms import FormaNarudzbe
-from .models import Narudzba
+from .models import Narudzba, Placanje
 from .utils import generiraj_broj_narudzbe
 
 # Create your views here.
@@ -40,9 +41,39 @@ def posalji_narudzbu(request):
             narudzba.save() 
             narudzba.broj_narudzbe = generiraj_broj_narudzbe(narudzba.id)
             narudzba.save()
-            return redirect('posalji_narudzbu')
+            context = {
+                'narudzba': narudzba,
+                'proizvodi_u_kosarici': proizvodi_u_kosarici
+            }
+            return render(request, 'narudzbe/posalji_narudzbu.html', context)
 
         else:
             print(forma_narudzbe.errors)
 
     return render(request, 'narudzbe/posalji_narudzbu.html')
+
+
+def placanje(request):
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest' and request.method == 'POST':
+        broj_narudzbe = request.POST.get('broj_narudzbe')
+        id_transakcije = request.POST.get('id_transakcije')
+        nacin_placanja = request.POST.get('nacin_placanja')
+        status = request.POST.get('status')
+
+        narudzba = Narudzba.objects.get(korisnik=request.user, broj_narudzbe=broj_narudzbe)
+        placanje = Placanje(
+            korisnik=request.user, 
+            id_transakcije=id_transakcije, 
+            nacin_placanja=nacin_placanja, 
+            iznos=narudzba.ukupno,
+            status=status
+        )
+        placanje.save()
+
+        narudzba.placanje = placanje
+        narudzba.naruceno = True
+        narudzba.save()
+
+        print(broj_narudzbe, id_transakcije, nacin_placanja, status)
+    
+    return HttpResponse('placanje view')

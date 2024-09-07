@@ -38,4 +38,5 @@ def dohvati_iznose_u_kosarici(request):
         pdv = sum(x for key in pdv_dict.values() for x in key.values())
 
         ukupan_iznos = ukupna_cijena_proizvoda + pdv
+        ukupan_iznos = "{:.2f}".format(float(ukupan_iznos)).replace(",", ".")
     return dict(ukupna_cijena_proizvoda=ukupna_cijena_proizvoda, pdv=pdv, ukupan_iznos=ukupan_iznos, pdv_dict=pdv_dict)

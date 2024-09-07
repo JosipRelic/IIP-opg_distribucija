@@ -18,3 +18,6 @@ def dohvati_korisnicki_profil(request):
 
 def dohvati_google_api(request):
     return {'GOOGLE_API_KEY': settings.GOOGLE_API_KEY}
+
+def dohvati_paypal_client_id(request):
+    return {'PAYPAL_CLIENT_ID': settings.PAYPAL_CLIENT_ID}

@@ -75,6 +75,7 @@ TEMPLATES = [
                 'korisnicki_racuni.context_processors.dohvati_korisnicki_profil',
                 'e_trznica.context_processors.dohvati_brojac_kosarice',
                 'e_trznica.context_processors.dohvati_iznose_u_kosarici',
+                'korisnicki_racuni.context_processors.dohvati_paypal_client_id',
             ],
         },
     },
@@ -176,3 +177,9 @@ GOOGLE_API_KEY = 'AIzaSyAOHgwMw4V7Yzq0VO0xQWVonGyF-eXOHYU'
 os.environ['PATH'] = os.path.join(BASE_DIR, 'env\Lib\site-packages\osgeo') + ';' + os.environ['PATH']
 os.environ['PROJ_LIB'] = os.path.join(BASE_DIR, 'env\Lib\site-packages\osgeo\data\proj') + ';' + os.environ['PATH']
 GDAL_LIBRARY_PATH = os.path.join(BASE_DIR, 'env\Lib\site-packages\osgeo\gdal.dll')
+
+
+
+PAYPAL_CLIENT_ID = 'ATGZbOvDOL6yq7uhaAv4VokN5puvxerVVp46fb0-tr2Pg0_gcr91NHMGsEJLPxIHW2bb5DTLL53oLlQY'
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
