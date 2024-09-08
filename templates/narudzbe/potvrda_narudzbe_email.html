@@ -1,0 +1,11 @@
+{% autoescape off %}
+
+Poštovani {{user.first_name}}, 
+
+Hvala Vam na narudžbi!
+
+DETALJI NARUDŽBE:
+Vaš broj narudžbe -> {{narudzba.broj_narudzbe}}
+Broj transakcije -> {{narudzba.placanje.id_transakcije}} 
+
+{% endautoescape %}

@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sadrzaj %}
+
+<div class="container mt-5 mb-5">
+    <div class="justify-content-center row">
+        <div class="col-md-8">
+            <img src="{% static 'images/opg_distribucija_logo.png'%}" alt="OPG Distribucija logo" width="100">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="mt-2 mb-3">Zahvaljujemo Vam na narudžbi!</h4>
+                </div>
+                <div class="col-md-6 mt-2 mb-3 fst-italic">
+                    <p class="mb-0">{{narudzba.ime_i_prezime}}</p>
+                    <p class="mb-0">{{narudzba.adresa}}</p>
+                    <p class="mb-0">{{narudzba.broj_telefona}}</p>
+                    <p class="mb-0">{{narudzba.email}}</p>
+                </div>
+            </div>     
+            <h6>Pozdrav {{narudzba.ime_i_prezime}}, </h6><span>Detalji Vaše narudžbe:</span>
+            <hr>
+            <div class="d-flex justify-content-between fst-italic">
+                  <div>
+                        <span class="d-block">Datum narudžbe: </span><span class="fw-bold">{{narudzba.kreirano}}</span>
+                  </div>  
+                  <div>
+                        <span class="d-block">Broj narudžbe: </span><span class="fw-bold">{{narudzba.broj_narudzbe}}</span>
+                  </div>  
+                  <div>
+                        <span class="d-block">Način plaćanja: </span><span class="fw-bold">{{narudzba.nacin_placanja}}</span>
+                  </div>  
+                  <div>
+                    <span class="d-block">ID Transakcije: </span><span class="fw-bold">{{narudzba.placanje.id_transakcije}}</span>
+                  </div>  
+            </div>
+            <hr>
+            <div class="table-responsive rounded">
+                <table class="table p-3 border">
+                    <tbody>
+                      {% for proizvod in naruceni_proizvodi %}
+                          <tr>
+                             <td class="p-4">
+                                <p class="mb-0"><b>{{proizvod.proizvod}}</b></p>
+                                <a class="text-muted text-decoration-none" href="{% url 'pojedinosti_opga' proizvod.proizvod.opg.opg_slug %}">{{proizvod.proizvod.opg.naziv_opga}}</a>
+                            </td>
+                             <td class="text-end p-4">{{proizvod.kolicina}} kom/kg</td>
+                             <td class="text-end p-4">{{proizvod.proizvod.cijena_proizvoda}} €</td>
+                          </tr>
+                      {% endfor %}
+
+                      
+                    </tbody>
+                    
+                </table>
+                
+            </div>
+
+            <div class="row mt-1">
+                 <div class="d-flex justify-content-center col-md-6 mt-5">
+                    <h2 class="text-success">PLAĆENO! <i class="bi bi-piggy-bank"></i></h2>
+                 </div>
+                 <div class="col-md-6">
+                    <ul class="list-group list-group-flush rounded">
+                        <li
+                        class="list-group-item border-0 p-6">
+                        Ukupna cijena proizvoda
+                        <span class="float-end">
+                            <span id="ukupna_cijena_proizvoda">{{ukupna_cijena_proizvoda}}</span>
+                            <span id="valuta"> €</span>
+                        </span>
+                        </li>
+
+                        {% for key,value in porezni_podaci.items %}
+                            {% for i,j in value.items %}
+                                <li class="list-group-item  p-6">
+                                {{ key }} <small>({{i}}%)</small>  
+                                <span class="float-end">                        
+                                    <span id="pdv-{{ key }}">{{j}}</span>
+                                    <span id="valuta"> €</span>
+                                </span>
+                                </li>
+                            {% endfor %}
+                        {% endfor %}
+
+                        <li
+                        class="list-group-item d-flex justify-content-between align-items-center border-0 p-6 mb-3">
+                        <div>
+                            <strong>Ukupan iznos</strong>
+                            <strong>
+                            <p class="mb-0">(Uključujući PDV)</p>
+                            </strong>
+                        </div>
+                        <strong>
+                            <span class="float-end">
+                            <span id="ukupan_iznos">{{narudzba.ukupno}}</span>
+                            <span id="valuta"> €</span>   
+                            </span> 
+                        </strong>                            
+                        </li>
+                    </ul>
+                 </div>   
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

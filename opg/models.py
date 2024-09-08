@@ -29,6 +29,7 @@ class Opg(models.Model):
                 context = {
                     "korisnik": self.korisnik,
                     "opg_verificiran": self.opg_verificiran,
+                    "to_email": self.korisnik.email
                 }
                 if self.opg_verificiran == True:
                     #posalji obavijest putem emaila

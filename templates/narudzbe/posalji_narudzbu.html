@@ -124,6 +124,7 @@
       var url = "{% url 'placanje' %}";
       var broj_narudzbe = "{{ narudzba.broj_narudzbe }}"
       const csrftoken = getCookie('csrftoken');
+      var narudzba_poslana = "{% url 'narudzba_poslana' %}"
       console.log('csrftoken ----> ', csrftoken);
       // Render the PayPal button into #paypal-button-container
         paypal.Buttons({
@@ -149,6 +150,9 @@
                     var status = orderData.status;
                     var nacin_placanja = 'PayPal';
                     posaljiTransakciju(id_transakcije, nacin_placanja, status);
+                    const element = document.getElementByID('paypal-button-container');
+                    element.innerHTML = '';
+                    element.innerHTML = '<h4 class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>Molimo pričekajte završetak narudžbe...</h4>';
 
                 });
               }
@@ -168,7 +172,8 @@
           'csrfmiddlewaretoken': csrftoken
         },
         success: function(response){
-          console.log('response ----> ', response);
+          console.log('response ----> ', response)
+          window.location.href = narudzba_poslana + '?broj_narudzbe='+response.broj_narudzbe+'&id_transakcije='+response.id_transakcije
         }
       })
     }
