@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+
+from narudzbe.models import Narudzba
 from .forms import FormaKorisnik
 from opg.forms import FormaOpg
 from .models import User, KorisnickiProfil
@@ -167,7 +169,14 @@ def mojRacun(request):
 @login_required(login_url='prijava')
 @user_passes_test(provjeri_korisnika_kupac)
 def kupac_nadzorna_ploca(request):
-    return render(request, 'korisnicki_racuni/kupac_nadzorna_ploca.html')
+    narudzbe = Narudzba.objects.filter(korisnik=request.user, naruceno=True).order_by('-kreirano')
+    posljednje_narudzbe = narudzbe[:5]
+    context = {
+        'narudzbe': narudzbe,
+        'broj_narudzbi': narudzbe.count(),
+        'posljednje_narudzbe': posljednje_narudzbe
+    }
+    return render(request, 'korisnicki_racuni/kupac_nadzorna_ploca.html', context)
 
 @login_required(login_url='prijava')
 @user_passes_test(provjeri_korisnika_opg)

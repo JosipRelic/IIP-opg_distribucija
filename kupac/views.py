@@ -3,6 +3,9 @@ from django.contrib.auth.decorators import login_required
 from korisnicki_racuni.forms import KorisnickiProfilForma, FormaInfoKorisnik
 from korisnicki_racuni.models import KorisnickiProfil
 from django.contrib import messages
+import simplejson as json
+
+from narudzbe.models import NaruceniProizvodi, Narudzba
 
 # Create your views here.
 @login_required(login_url='prijava')
@@ -29,3 +32,36 @@ def kupac_profil(request):
         'forma_info_korisnik': forma_info_korisnik
     }
     return render(request, 'kupac/kupac_profil.html', context)
+
+def moje_narudzbe(request):
+    narudzbe = Narudzba.objects.filter(korisnik=request.user, naruceno=True)
+    context = {
+        'narudzbe': narudzbe,
+        'broj_narudzbi': narudzbe.count(),
+    }
+    return render(request, 'kupac/moje_narudzbe.html', context)
+
+def detalji_narudzbe(request, broj_narudzbe):
+    narudzba = Narudzba.objects.get(broj_narudzbe=broj_narudzbe, naruceno=True)
+
+    if not narudzba:
+        print(f"Narudzba pod ovim brojem ne postoji {broj_narudzbe} ili nije narucena(naruceno=False)")
+        return redirect('kupac')
+
+    naruceni_proizvodi = NaruceniProizvodi.objects.filter(narudzba=narudzba)
+    
+    ukupna_cijena_proizvoda = 0
+
+    for proizvod in naruceni_proizvodi:
+        ukupna_cijena_proizvoda += (proizvod.cijena * proizvod.kolicina)
+    
+    porezni_podaci = json.loads(narudzba.porezni_podaci)
+
+    context = {
+        'narudzba': narudzba,
+        'naruceni_proizvodi': naruceni_proizvodi,
+        'ukupna_cijena_proizvoda': round(ukupna_cijena_proizvoda,2),
+        'porezni_podaci': porezni_podaci
+    }
+
+    return render(request, 'kupac/detalji_narudzbe.html', context)

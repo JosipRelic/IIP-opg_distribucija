@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sadrzaj %}
+
+<div class="nadzorna_ploca">
+    {% include "kupac/naslovna.html" %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                <!--Ucitavanje izbornika OPG-->
+                {% include 'includes/kupac_izbornik.html' %}
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <div class="row">
+                    <h4>SVE NARUDŽBE</h4>                                                         
+                </div>
+                <div class="table-responsive mt-3 mb-3 rounded">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Broj narudžbe</th>
+                          <th>Ime i Prezime</th>
+                          <th>Broj telefona</th>
+                          <th>Ukupna cijena</th>
+                          <th>Status narudžbe</th>                                   
+                          <th>Datum naručivanja</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for narudzba in narudzbe %}
+                              <tr>
+                                <td><a href="{% url "detalji_narudzbe" narudzba.broj_narudzbe %}" data-toggle="modal" data-target="#order-det-22606">{{narudzba.broj_narudzbe}}</a></td>
+                                <td>{{narudzba.ime_i_prezime}}</td>
+                                <td>{{narudzba.broj_telefona}}</td>
+                                <td>€ {{narudzba.ukupno}}</td>                                                                               
+                                <td><span class="status-narudzbe badge bg-success">{{narudzba.status}}</span></td>
+                                <td>{{narudzba.kreirano}}</td>
+                              </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>    
+{% endblock %}

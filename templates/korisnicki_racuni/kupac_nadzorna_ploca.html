@@ -13,16 +13,34 @@
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                             <div class="container mt-3">
+                                  <h3 class = "text-uppercase mb-3">STANJE</h3>
+                                  <hr>
+                                  <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 mb-3">
+                                        <div class="card">
+                                            <div class = "card-header">
+                                                Ukupno narudžbi
+                                            </div>
+                                            <div class = "card-body text-center">
+                                                <a href="{% url "moje_narudzbe" %}" class="text-decoration-none"><h5 class="card-title">{{broj_narudzbi}}</h5></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                  <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <div class="card">
+                                        <div class = "card-header">Prijavljen kao: <b>{{user.email}}</b></div>
+                                        <div class = "card-body text-center">
+                                            <a href="{% url "kupac_profil" %}" class="text-decoration-none"><h5 class="card-title">Uredi profil<i class="bi bi-pencil-square ms-2"></i></h5></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                                  <br>  
+
+
                                 <div class="row">
-                                        <h4>POSLJEDNJE NARUDŽBE</h4>
-                                            <div class="col-lg-6 col-md-6 col-xs-6">
-                                                    <select class="form-select">
-                                                        <option selected="odabrano" value="">Odaberi status narudžbe</option>
-                                                        <option value="U_tijeku">U tijeku</option>
-                                                        <option value="Otkazana">Otkazana</option>
-                                                        <option value="Zavrsena">Završena</option>
-                                                    </select>
-                                            </div>                                                                 
+                                        <h4>POSLJEDNJE NARUDŽBE</h4>                                                         
                                 </div>
                                 
                                 <div class="table-responsive mt-3 mb-3 rounded">
@@ -30,38 +48,24 @@
                                     <thead>
                                       <tr>
                                         <th>Broj narudžbe</th>
-                                        <th>Datum</th>
-                                        <th>Početna cijena</th>
-                                        <th>Dodatni troškovi</th>
-                                        <th>Ukupna cijena</th>                                   
-                                        <th>Status narudžbe</th>
+                                        <th>Ime i Prezime</th>
+                                        <th>Broj telefona</th>
+                                        <th>Ukupna cijena</th>
+                                        <th>Status narudžbe</th>                                   
+                                        <th>Datum naručivanja</th>
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      <tr>
-                                        <td><a href="#" data-toggle="modal" data-target="#order-det-22606">narudžba-22606</a></td>
-                                        <td>Svi 18,2024</td>
-                                        <td>€ 35.09</td>
-                                        <td>€ 3.90</td>
-                                        <td>€ 38.99</td>                                       
-                                        <td><span class="status-narudzbe badge bg-success">Završena</span></td>
-                                      </tr>
-                                      <tr>
-                                        <td><a href="#" data-toggle="modal" data-target="#order-det-22606">narudžba-22583</a></td>
-                                        <td>Svi 15,2024</td>
-                                        <td>€ 23.60</td>
-                                        <td>€ 2.62</td>
-                                        <td>€ 26.22</td>                  
-                                        <td><span class="status-narudzbe badge bg-info text-dark">U tijeku</span></td>
-                                      </tr>
-                                      <tr>
-                                        <td><a href="#" data-toggle="modal" data-target="#order-det-22606">narudžba-22493</a></td>
-                                        <td>Svi 12,2024</td>
-                                        <td>€ 25.42</td>
-                                        <td>€ 2.82</td>
-                                        <td>€ 28.24</td>                                      
-                                        <td><span class="status-narudzbe badge bg-success">Završena</span></td>
-                                      </tr>
+                                      {% for narudzba in posljednje_narudzbe %}
+                                            <tr>
+                                              <td><a href="{% url "detalji_narudzbe" narudzba.broj_narudzbe %}" data-toggle="modal" data-target="#order-det-22606">{{narudzba.broj_narudzbe}}</a></td>
+                                              <td>{{narudzba.ime_i_prezime}}</td>
+                                              <td>{{narudzba.broj_telefona}}</td>
+                                              <td>€ {{narudzba.ukupno}}</td>                                                                               
+                                              <td><span class="status-narudzbe badge bg-success">{{narudzba.status}}</span></td>
+                                              <td>{{narudzba.kreirano}}</td>
+                                            </tr>
+                                      {% endfor %}
                                     </tbody>
                                   </table>
                                 </div>
@@ -71,7 +75,7 @@
     </div>
 
    
-</div> <!--nadzorna_ploca_opg-->
+</div>
 
 
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4 mb-2 text-center">
