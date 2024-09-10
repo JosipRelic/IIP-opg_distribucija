@@ -181,7 +181,15 @@ def kupac_nadzorna_ploca(request):
 @login_required(login_url='prijava')
 @user_passes_test(provjeri_korisnika_opg)
 def opg_nadzorna_ploca(request):
-    return render(request, 'korisnicki_racuni/opg_nadzorna_ploca.html')
+    opg = Opg.objects.get(korisnik = request.user)
+    narudzbe = Narudzba.objects.filter(opgovi__in=[opg.id], naruceno=True).order_by('-kreirano')
+    posljednje_narudzbe = narudzbe[:5]
+    context = {
+        'narudzbe': narudzbe,
+        'broj_narudzbi': narudzbe.count(),
+        'posljednje_narudzbe': posljednje_narudzbe
+    }
+    return render(request, 'korisnicki_racuni/opg_nadzorna_ploca.html', context)
 
 
 def zaboravljena_lozinka(request):

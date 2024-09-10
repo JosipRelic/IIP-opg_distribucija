@@ -3,6 +3,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.template.defaultfilters import slugify
 
+from narudzbe.models import NaruceniProizvodi, Narudzba
+
 from .forms import FormaOpg
 from opg_ponuda.forms import FormaKategorije, FormaProizvodi
 from korisnicki_racuni.forms import KorisnickiProfilForma
@@ -198,3 +200,18 @@ def obrisi_proizvod(request, pk=None):
     proizvod.delete()
     messages.success(request, 'Proizvod je uspješno obrisan.')
     return redirect('proizvodi_po_kategoriji', proizvod.kategorija_proizvoda.pk)
+
+
+def detalji_narudzbe_opg(request, broj_narudzbe):
+    try:
+        narudzba = Narudzba.objects.get(broj_narudzbe=broj_narudzbe, naruceno=True)
+        naruceni_proizvodi = NaruceniProizvodi.objects.filter(narudzba=narudzba, proizvod__opg=dohvati_opg(request))
+
+        context = {
+            'narudzba': narudzba,
+            'naruceni_proizvodi': naruceni_proizvodi
+        }
+    except:
+        redirect('opg')
+
+    return render(request, 'opg/detalji_narudzbe_opg.html', context)

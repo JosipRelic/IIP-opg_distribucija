@@ -1,8 +1,9 @@
 from django.http import HttpResponse, JsonResponse
 import simplejson as json
 from django.shortcuts import render, redirect
-from e_trznica.models import Kosarica
+from e_trznica.models import Kosarica, Porez
 from e_trznica.context_processors import dohvati_iznose_u_kosarici
+from opg_ponuda.models import Proizvodi
 from .forms import FormaNarudzbe
 from .models import NaruceniProizvodi, Narudzba, Placanje
 from .utils import generiraj_broj_narudzbe
@@ -17,6 +18,38 @@ def posalji_narudzbu(request):
     if broj_proizvoda_u_kosarici <= 0:
         return redirect('e_trznica')
     
+    id_opgova = []
+    for i in proizvodi_u_kosarici:
+        if i.proizvod.opg.id not in id_opgova:
+            id_opgova.append(i.proizvod.opg.id)
+
+    dohvati_porez = Porez.objects.filter(aktivno=True)
+    ukupna_cijena_proizvoda=0
+    ukupni_podaci = {}
+    k = {}
+    for i in proizvodi_u_kosarici:
+        proizvod = Proizvodi.objects.get(pk = i.proizvod.id, opg_id__in=id_opgova)
+        o_id = proizvod.opg.id 
+        if o_id in k:
+            ukupna_cijena_proizvoda = k[o_id]
+            ukupna_cijena_proizvoda += (proizvod.cijena_proizvoda * i.kolicina)
+            k[o_id] = ukupna_cijena_proizvoda
+        else:
+            ukupna_cijena_proizvoda = (proizvod.cijena_proizvoda * i.kolicina)
+            k[o_id] = ukupna_cijena_proizvoda
+        
+        pdv_dict = {}
+        for i in dohvati_porez:
+            vrsta_poreza = i.vrsta_poreza
+            postotak_poreza = i.postotak_poreza
+            iznos_poreza = round((ukupna_cijena_proizvoda * postotak_poreza)/100, 2)
+            pdv_dict.update({vrsta_poreza : {str(postotak_poreza) : str(iznos_poreza)}})
+        
+        ukupni_podaci.update({proizvod.opg.id: { str(ukupna_cijena_proizvoda): str(pdv_dict)}})
+    print(ukupni_podaci)
+
+        
+
     ukupna_cijena_proizvoda = dohvati_iznose_u_kosarici(request)['ukupna_cijena_proizvoda']
     pdv = dohvati_iznose_u_kosarici(request)['pdv']
     ukupan_iznos = dohvati_iznose_u_kosarici(request)['ukupan_iznos']
@@ -39,10 +72,12 @@ def posalji_narudzbu(request):
             narudzba.korisnik = request.user
             narudzba.ukupno = ukupan_iznos
             narudzba.porezni_podaci = json.dumps(pdv_dict)
+            narudzba.ukupni_podaci=json.dumps(ukupni_podaci)
             narudzba.ukupno_poreza = pdv
             narudzba.nacin_placanja = request.POST['nacin_placanja']
             narudzba.save() 
             narudzba.broj_narudzbe = generiraj_broj_narudzbe(narudzba.id)
+            narudzba.opgovi.add(*id_opgova)
             narudzba.save()
             context = {
                 'narudzba': narudzba,

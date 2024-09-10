@@ -1,5 +1,6 @@
 from django.db import models
 from korisnicki_racuni.models import User
+from opg.models import Opg
 from opg_ponuda.models import Proizvodi
 
 
@@ -33,6 +34,7 @@ class Narudzba(models.Model):
 
     korisnik = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     placanje = models.ForeignKey(Placanje, on_delete=models.SET_NULL, blank=True, null=True)
+    opgovi = models.ManyToManyField(Opg, blank=True)
     broj_narudzbe = models.CharField(max_length=20)
     ime = models.CharField(max_length=50)
     prezime = models.CharField(max_length=50)
@@ -44,7 +46,8 @@ class Narudzba(models.Model):
     grad = models.CharField(max_length=50)
     postanski_broj = models.CharField(max_length=10)
     ukupno = models.FloatField()
-    porezni_podaci = models.JSONField(blank=True, help_text= "Format podataka: {'vrsta_poreza':{'postotak_poreza':'iznos_poreza'}}")
+    porezni_podaci = models.JSONField(blank=True, help_text= "Format podataka: {'vrsta_poreza':{'postotak_poreza':'iznos_poreza'}}", null=True)
+    ukupni_podaci = models.JSONField(blank=True, null=True)
     ukupno_poreza = models.FloatField()
     nacin_placanja = models.CharField(max_length=25)
     status = models.CharField(max_length=15, choices=STATUS_NARUDZBE, default='U tijeku')
@@ -55,6 +58,9 @@ class Narudzba(models.Model):
     @property
     def ime_i_prezime(self):
         return f'{self.ime} {self.prezime}'
+    
+    def narudzba_poslana_za(self):
+        return ", ".join([str(i) for i in self.opgovi.all()])
     
     def __str__(self):
         return self.broj_narudzbe
