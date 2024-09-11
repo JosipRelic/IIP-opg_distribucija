@@ -6,9 +6,10 @@ from e_trznica.context_processors import dohvati_iznose_u_kosarici
 from opg_ponuda.models import Proizvodi
 from .forms import FormaNarudzbe
 from .models import NaruceniProizvodi, Narudzba, Placanje
-from .utils import generiraj_broj_narudzbe
+from .utils import generiraj_broj_narudzbe, ukupne_narudzbe_po_opgu
 from korisnicki_racuni.utils import posalji_obavijest_opg_verifikacija
 from django.contrib.auth.decorators import login_required
+from django.contrib.sites.shortcuts import get_current_site
 
 # Create your views here.
 @login_required(login_url='prijava')
@@ -126,10 +127,21 @@ def placanje(request):
 
         mail_subject = 'Hvala na narudžbi.'
         mail_template = 'narudzbe/potvrda_narudzbe_email.html'
+
+        naruceni_proizvodi = NaruceniProizvodi.objects.filter(narudzba=narudzba)
+        kupac_ukupna_cijena_proizvoda = 0
+        porezni_podaci = json.loads(narudzba.porezni_podaci)
+        for proizvod in naruceni_proizvodi:
+            kupac_ukupna_cijena_proizvoda += (proizvod.cijena * proizvod.kolicina) 
+
         context = {
             'korisnik': request.user,
             'narudzba': narudzba,
-            'to_email': narudzba.email
+            'to_email': narudzba.email,
+            'naruceni_proizvodi': naruceni_proizvodi,
+            'domain': get_current_site(request),
+            'kupac_ukupna_cijena_proizvoda': kupac_ukupna_cijena_proizvoda,
+            'porezni_podaci': porezni_podaci,
         }
         posalji_obavijest_opg_verifikacija(mail_subject, mail_template, context)
 
@@ -139,12 +151,19 @@ def placanje(request):
         for proizvod in proizvodi_u_kosarici:
             if proizvod.proizvod.opg.korisnik.email not in to_emails:
                 to_emails.append(proizvod.proizvod.opg.korisnik.email)
-        print('to_emails --->', to_emails)
-        context = {
-            'narudzba': narudzba,
-            'to_email': to_emails
-        }
-        posalji_obavijest_opg_verifikacija(mail_subject, mail_template, context)
+
+                naruceni_proizvodi_za_opg = NaruceniProizvodi.objects.filter(narudzba=narudzba, proizvod__opg=proizvod.proizvod.opg)
+                print(naruceni_proizvodi_za_opg)
+
+                context = {
+                    'narudzba': narudzba,
+                    'to_email': proizvod.proizvod.opg.korisnik.email,
+                    'naruceni_proizvodi_za_opg': naruceni_proizvodi_za_opg,
+                    'opg_ukupna_cijena_proizvoda': ukupne_narudzbe_po_opgu(narudzba, proizvod.proizvod.opg.id)['ukupna_cijena_proizvoda'],
+                    'porezni_podaci': ukupne_narudzbe_po_opgu(narudzba, proizvod.proizvod.opg.id)['pdv_dict'],
+                    'opg_ukupno': ukupne_narudzbe_po_opgu(narudzba, proizvod.proizvod.opg.id)['ukupno'],
+                }
+                posalji_obavijest_opg_verifikacija(mail_subject, mail_template, context)
        
         #proizvodi_u_kosarici.delete()
         response = {

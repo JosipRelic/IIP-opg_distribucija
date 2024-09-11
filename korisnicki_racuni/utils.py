@@ -30,6 +30,7 @@ def posalji_verifikacijski_email(request, user, email_subject, email_template):
     })
     to_email = user.email
     mail = EmailMessage(mail_subject, message, from_email, to=[to_email])
+    mail.content_subtype = "html"
     mail.send()
 
 
@@ -42,6 +43,7 @@ def posalji_obavijest_opg_verifikacija(mail_subject, mail_template, context):
     else:
         to_email = context['to_email']
     mail = EmailMessage(mail_subject, message, from_email, to=to_email)
+    mail.content_subtype = "html"
     mail.send()
 
                
