@@ -2,9 +2,9 @@ from django.db import models
 from korisnicki_racuni.models import User
 from opg.models import Opg
 from opg_ponuda.models import Proizvodi
+import simplejson as json
 
-
-# Create your models here.
+request_object = ''
 
 class Placanje(models.Model):
     OPCIJE_PLACANJA = (
@@ -61,6 +61,38 @@ class Narudzba(models.Model):
     
     def narudzba_poslana_za(self):
         return ", ".join([str(i) for i in self.opgovi.all()])
+    
+    def dohvati_ukupno_po_opgu(self):
+        opg = Opg.objects.get(korisnik=request_object.user)
+        
+        ukupna_cijena_proizvoda = 0
+        iznos_poreza = 0
+        pdv_dict = {}
+        
+        if self.ukupni_podaci:
+            ukupni_podaci = json.loads(self.ukupni_podaci)
+            podaci = ukupni_podaci.get(str(opg.id))
+            
+            
+            for key,value in podaci.items():
+                ukupna_cijena_proizvoda += float(key)
+                value = value.replace("'", '"')
+                value = json.loads(value)
+                pdv_dict.update(value)
+
+                for i in value:
+                    for j in value[i]:
+                        iznos_poreza += float(value[i][j])
+
+        ukupno = float(ukupna_cijena_proizvoda) + float(iznos_poreza)
+        
+        context = {
+            'ukupna_cijena_proizvoda': ukupna_cijena_proizvoda,
+            'pdv_dict': pdv_dict,
+            'ukupno': ukupno
+        }
+
+        return context
     
     def __str__(self):
         return self.broj_narudzbe

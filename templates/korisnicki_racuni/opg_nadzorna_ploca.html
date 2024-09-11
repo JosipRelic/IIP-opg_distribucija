@@ -12,7 +12,16 @@
                     {% include 'includes/opg_izbornik.html' %}
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 mt-3">
-                            <h3 class = "text-uppercase mb-3">STANJE</h3>
+                            
+                            <div class="row">
+                              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                                  <h3 class = "text-uppercase mt-2">STANJE</h3>
+                              </div>
+                              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <p>Prijavljeni ste kao: <b>{{user.email}}</b></p>
+                               </div>
+                            </div>
+                            
                             <hr>
                             <div class="row">
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 mb-3">
@@ -31,7 +40,7 @@
                                           Zarada ovaj mjesec
                                       </div>
                                       <div class = "card-body text-center">
-                                        <a href="#" class="text-decoration-none"><h5 class="card-title">€ 254.60</h5></a>
+                                        <a href="#" class="text-decoration-none"><h5 class="card-title">€ {{zarada_ovaj_mjesec | floatformat:2}}</h5></a>
                                       </div>
                                   </div>
                               </div>
@@ -39,7 +48,7 @@
                                 <div class="card">
                                     <div class = "card-header">Ukupna zarada</div>
                                     <div class = "card-body text-center">
-                                        <a href="#" class="text-decoration-none"><h5 class="card-title">€ 25432.60</h5></a>
+                                        <a href="#" class="text-decoration-none"><h5 class="card-title">€ {{ukupna_zarada | floatformat:2}}</h5></a>
                                     </div>
                                 </div>
                             </div>
@@ -70,7 +79,7 @@
                                               <td><a href="{% url "detalji_narudzbe_opg" narudzba.broj_narudzbe %}" data-toggle="modal" data-target="#order-det-22606">{{narudzba.broj_narudzbe}}</a></td>
                                               <td>{{narudzba.ime_i_prezime}}</td>
                                               <td>{{narudzba.broj_telefona}}</td>
-                                              <td>€ {{narudzba.ukupno}}</td>                                                                               
+                                              <td>€ {{narudzba.dohvati_ukupno_po_opgu.ukupno}}</td>                                                                               
                                               <td><span class="status-narudzbe badge bg-success">{{narudzba.status}}</span></td>
                                               <td>{{narudzba.kreirano}}</td>
                                             </tr>

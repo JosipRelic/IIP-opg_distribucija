@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import render, redirect
 
 from narudzbe.models import Narudzba
@@ -171,6 +172,7 @@ def mojRacun(request):
 def kupac_nadzorna_ploca(request):
     narudzbe = Narudzba.objects.filter(korisnik=request.user, naruceno=True).order_by('-kreirano')
     posljednje_narudzbe = narudzbe[:5]
+
     context = {
         'narudzbe': narudzbe,
         'broj_narudzbi': narudzbe.count(),
@@ -184,10 +186,24 @@ def opg_nadzorna_ploca(request):
     opg = Opg.objects.get(korisnik = request.user)
     narudzbe = Narudzba.objects.filter(opgovi__in=[opg.id], naruceno=True).order_by('-kreirano')
     posljednje_narudzbe = narudzbe[:5]
+    
+    trenutni_mjesec = datetime.datetime.now().month
+    narudzbe_trenutnog_mjeseca = narudzbe.filter(opgovi__in=[opg.id], kreirano__month=trenutni_mjesec)
+    zarada_ovaj_mjesec = 0
+    for narudzba in narudzbe_trenutnog_mjeseca:
+        zarada_ovaj_mjesec += narudzba.dohvati_ukupno_po_opgu()['ukupno']
+    print(zarada_ovaj_mjesec)
+
+    ukupna_zarada = 0
+    for i in narudzbe:
+        ukupna_zarada+=i.dohvati_ukupno_po_opgu()['ukupno']
+
     context = {
         'narudzbe': narudzbe,
         'broj_narudzbi': narudzbe.count(),
-        'posljednje_narudzbe': posljednje_narudzbe
+        'posljednje_narudzbe': posljednje_narudzbe,
+        'ukupna_zarada': ukupna_zarada,
+        'zarada_ovaj_mjesec': zarada_ovaj_mjesec
     }
     return render(request, 'korisnicki_racuni/opg_nadzorna_ploca.html', context)
 

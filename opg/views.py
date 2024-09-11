@@ -209,9 +209,22 @@ def detalji_narudzbe_opg(request, broj_narudzbe):
 
         context = {
             'narudzba': narudzba,
-            'naruceni_proizvodi': naruceni_proizvodi
+            'naruceni_proizvodi': naruceni_proizvodi,
+            'ukupna_cijena_proizvoda': narudzba.dohvati_ukupno_po_opgu()['ukupna_cijena_proizvoda'],
+            'porezni_podaci': narudzba.dohvati_ukupno_po_opgu()['pdv_dict'],
+            'ukupno': narudzba.dohvati_ukupno_po_opgu()['ukupno']
         }
     except:
         redirect('opg')
 
     return render(request, 'opg/detalji_narudzbe_opg.html', context)
+
+
+def moje_narudzbe_opg(request):
+    opg = Opg.objects.get(korisnik = request.user)
+    narudzbe = Narudzba.objects.filter(opgovi__in=[opg.id], naruceno=True).order_by('-kreirano')
+
+    context = {
+        'narudzbe': narudzbe
+    }
+    return render(request, 'opg/moje_narudzbe_opg.html', context)

@@ -16,5 +16,6 @@ urlpatterns = [
     path('kreiranje-ponude/proizvod/uredi_proizvod/<int:pk>/', views.uredi_proizvod, name='uredi_proizvod'),
     path('kreiranje-ponude/proizvod/obrisi_proizvod/<int:pk>/', views.obrisi_proizvod, name='obrisi_proizvod'),
 
-    path('detalji_narudzbe_opg/<str:broj_narudzbe>/', views.detalji_narudzbe_opg, name='detalji_narudzbe_opg')
+    path('detalji_narudzbe_opg/<str:broj_narudzbe>/', views.detalji_narudzbe_opg, name='detalji_narudzbe_opg'),
+    path('moje_narudzbe_opg/', views.moje_narudzbe_opg, name='moje_narudzbe_opg')
 ]
